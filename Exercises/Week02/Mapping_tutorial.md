@@ -126,8 +126,8 @@ After it you will the chromosomes and genes. Now you can download the
 mapping results by typing: File ----&gt; Load from File... ----&gt;
 ERR1019076.bam.
 
-You will see something like this: ![IGV brownser
-illustration](/Users/PM/Desktop/PHD_incomplete/PG2018/Population_Genetics_2018/Exercises/Week02/IGV_example.png)
+You will see something like this: ![IGV bronwser
+illustration](https://github.com/izabelcavassim/PG_2018/blob/master/Exercises/Week02/IGV_example.png)
 
 Try to understand what are the different attributes present in the
 viewer. If you zoom in very much you will find single nucleotide
