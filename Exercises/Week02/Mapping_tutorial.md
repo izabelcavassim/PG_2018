@@ -154,9 +154,28 @@ terminal, you just need to type R.
     library(ggplot2)
     library(dplyr)
 
+    ## 
+    ## Attaching package: 'dplyr'
+
+    ## The following objects are masked from 'package:stats':
+    ## 
+    ##     filter, lag
+
+    ## The following objects are masked from 'package:base':
+    ## 
+    ##     intersect, setdiff, setequal, union
+
     scaf <- read.table("/Users/PM/Desktop/PHD_incomplete/data/deduped_ERR1019076.coverage",header=FALSE, sep="\t", na.strings="NA", dec=".", strip.white=TRUE, col.names = c("Scaffold", "locus", "depth"))
       
     head(scaf)
+
+    ##   Scaffold  locus depth
+    ## 1        2 833855     1
+    ## 2        2 833856     1
+    ## 3        2 833857     1
+    ## 4        2 833858     1
+    ## 5        2 833859     1
+    ## 6        2 833860     1
 
     # Compressing the dataframe in windows
     scaf %>% 
@@ -171,6 +190,8 @@ terminal, you just need to type R.
 
     # Saving your coverage plot
     ggsave(p, device = "pdf")
+
+    ## Saving 7 x 5 in image
 
 What are the conclusions you can extract from these analysis? Does the
 covergae match with what you observed with IGV?

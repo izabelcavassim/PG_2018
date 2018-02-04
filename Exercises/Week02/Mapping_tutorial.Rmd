@@ -128,7 +128,7 @@ less deduped_ERR1019076.coverage
 ```
 
 Now open the subset file in R and plot it. You can do it in the terminal, you just need to type R. 
-```{r, eval=FALSE, warning=FALSE}
+```{r, warning=FALSE}
 library(ggplot2)
 library(dplyr)
 
