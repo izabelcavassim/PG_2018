@@ -127,7 +127,7 @@ mapping results by typing: File ----&gt; Load from File... ----&gt;
 ERR1019076.bam.
 
 You will see something like this: ![IGV brownser
-illustration](/Users/PM/Desktop/PHD_incomplete/PG2018/PG2018/Exercises/Week02/IGV_example.png)
+illustration](/Users/PM/Desktop/PHD_incomplete/PG2018/Population_Genetics_2018/Exercises/Week02/IGV_example.png)
 
 Try to understand what are the different attributes present in the
 viewer. If you zoom in very much you will find single nucleotide
@@ -154,7 +154,7 @@ terminal, you just need to type R.
     library(ggplot2)
     library(dplyr)
 
-    scaf <- read.table("/Users/PM/Desktop/PHD_incomplete/PG2018/PG2018/Exercises/Week02/deduped_ERR1019076.coverage",header=FALSE, sep="\t", na.strings="NA", dec=".", strip.white=TRUE, col.names = c("Scaffold", "locus", "depth"))
+    scaf <- read.table("/Users/PM/Desktop/PHD_incomplete/data/deduped_ERR1019076.coverage",header=FALSE, sep="\t", na.strings="NA", dec=".", strip.white=TRUE, col.names = c("Scaffold", "locus", "depth"))
       
     head(scaf)
 
