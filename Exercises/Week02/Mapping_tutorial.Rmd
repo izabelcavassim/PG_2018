@@ -92,7 +92,6 @@ samtools view ERR1019076.bam | head
 ```
 
 Get some useful stats of your mapping:
-
 ```{r, engine = 'bash', eval = FALSE}
 samtools flagstat ERR1019076.bam
 ```
