@@ -231,7 +231,19 @@ efficient and accurate variant-detection in high-throughput sequencing
 data. You can access their website
 [here](http://www.well.ox.ac.uk/platypus).
 
-    python Platypus.py callVariants --bamFiles=ERR1019076.bam --refFile=/home/mica16/simons/faststorage/data/cteam_lite_public3/FullyPublic/Href.fa output=AllVariants.vcf
+Creating a conda environment:
+
+    conda create --name Mapping_environment
+
+Activating an environment:
+
+    conda activate Mapping_environment
+
+Installing platypus:
+
+    conda update platypus-variant
+
+    platypus callVariants --bamFiles=ERR1019076.bam --refFile= /home/Data/Homo_sapiens.GRCh37.75.dna.chromosome.2.fa --output=AllVariants.vcf
 
 The output will be a single
 [VCF](http://samtools.github.io/hts-specs/VCFv4.2.pdf) file containing

@@ -173,8 +173,23 @@ Even though just a tiny portion (around 2%) of our genomes are based of protein 
 Once we have mapped our reads we can now start with variant detection. 
 For now we will be using the software **Platypus**: a tool designed for efficient and accurate variant-detection in high-throughput sequencing data. You can access their website [here](http://www.well.ox.ac.uk/platypus).
 
+Creating a conda environment:
 ```{r, engine = 'bash', eval = FALSE}
-python Platypus.py callVariants --bamFiles=ERR1019076.bam --refFile=/home/mica16/simons/faststorage/data/cteam_lite_public3/FullyPublic/Href.fa output=AllVariants.vcf
+conda create --name Mapping_environment
+```
+
+Activating an environment:
+```{r, engine = 'bash', eval = FALSE}
+conda activate Mapping_environment
+```
+
+Installing platypus:
+```{r, engine = 'bash', eval = FALSE}
+conda update platypus-variant
+```
+
+```{r, engine = 'bash', eval = FALSE}
+platypus callVariants --bamFiles=ERR1019076.bam --refFile= /home/Data/Homo_sapiens.GRCh37.75.dna.chromosome.2.fa --output=AllVariants.vcf
 ```
 The output will be a single [VCF](http://samtools.github.io/hts-specs/VCFv4.2.pdf) file containing all the variants that Platypus identified, and a 'log.txt' file, containing log information. 
 
