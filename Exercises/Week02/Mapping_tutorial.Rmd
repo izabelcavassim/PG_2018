@@ -65,18 +65,22 @@ Two input files are needed to do genome mapping:
 
 First we need to index the reference file for later use. This step is important for the speed and process of the mapping algorithm. It takes around 4 minutes. This creates a collecion of files that are used by BWA to perform the alignment.
 
+Create a soft-link of fasta reference to your folder:
 ```{r, engine = 'bash', eval = FALSE}
-bwa index -p 'Homo_sapiens.GRCh37.75.dna.chromosome.2' -a bwtsw 'Homo_sapiens.GRCh37.75.dna.chromosome.2.fa'
+ln -s /home/Data/Homo_sapiens.GRCh37.75.dna.chromosome.2.fa /home/user_name/
+```
+
+Then produce the indexes needed for bwa mapper:
+```{r, engine = 'bash', eval = FALSE}
+bwa index -p Homo_sapiens.GRCh37.75.dna.chromosome.2 -a bwtsw Homo_sapiens.GRCh37.75.dna.chromosome.2.fa
 ```
 
 You also need to generate a fasta file index. This can be done using **samtools**:
-
 ```{r, engine = 'bash', eval = FALSE}
-samtools faidx 'Homo_sapiens.GRCh37.75.dna.chromosome.2.fa' 
+samtools faidx Homo_sapiens.GRCh37.75.dna.chromosome.2.fa
 ```
 
 Now you can map the reads back to the reference. This will take around 10 minutes. You can start installing the software that will be used later in this tutorial (IGV) while you wait for it. 
-
 ```{r, engine = 'bash', eval = FALSE}
 bwa mem -t 16 Homo_sapiens.GRCh37.75.dna.chromosome.2 ERR1019076_reads.fq | \
 samtools sort -O BAM -o ERR1019076.bam
@@ -97,6 +101,13 @@ Once the map is generated, you can index the bam file to visualize it using igv.
 
 ```{r, engine = 'bash', eval = FALSE}
 samtools index ERR1019076.bam
+```
+
+## Dowloading via terminal
+
+You can download the data via terminal by the following:
+```{r, engine = 'bash', eval = FALSE}
+scp -P 8922 root@185.45.23.197:/home/Data/ERR1019076.bam Directory/My_computer
 ```
 
 ## IGV software

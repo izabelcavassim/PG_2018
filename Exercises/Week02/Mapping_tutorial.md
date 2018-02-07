@@ -80,12 +80,18 @@ important for the speed and process of the mapping algorithm. It takes
 around 4 minutes. This creates a collecion of files that are used by BWA
 to perform the alignment.
 
-    bwa index -p 'Homo_sapiens.GRCh37.75.dna.chromosome.2' -a bwtsw 'Homo_sapiens.GRCh37.75.dna.chromosome.2.fa'
+Create a soft-link of fasta reference to your folder:
+
+    ln -s /home/Data/Homo_sapiens.GRCh37.75.dna.chromosome.2.fa /home/user_name/
+
+Then produce the indexes needed for bwa mapper:
+
+    bwa index -p Homo_sapiens.GRCh37.75.dna.chromosome.2 -a bwtsw Homo_sapiens.GRCh37.75.dna.chromosome.2.fa
 
 You also need to generate a fasta file index. This can be done using
 **samtools**:
 
-    samtools faidx 'Homo_sapiens.GRCh37.75.dna.chromosome.2.fa' 
+    samtools faidx Homo_sapiens.GRCh37.75.dna.chromosome.2.fa
 
 Now you can map the reads back to the reference. This will take around
 10 minutes. You can start installing the software that will be used
@@ -110,6 +116,13 @@ can quickly display alignments in each genomic region to which you
 navigate.
 
     samtools index ERR1019076.bam
+
+Dowloading via terminal
+-----------------------
+
+You can download the data via terminal by the following:
+
+    scp -P 8922 root@185.45.23.197:/home/Data/ERR1019076.bam Directory/My_computer
 
 IGV software
 ------------
