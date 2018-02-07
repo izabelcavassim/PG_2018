@@ -52,7 +52,7 @@ ssh -p 8922 [user]@185.45.23.197
 
 ## Data source 
 You will be separated in pairs so you can help each other out with the commands. Each of you will be responsible for 2 individuals and at the end of this exercise we will estimate the SNP heterozygosity per individual. The data is placed in a folder called **Data** in the same directory as users folder. 
-The individuals for each person is written in the spreadsheet [here](https://docs.google.com/spreadsheets/d/1OEHI1tNiwHrwKkl9L5rPtbVKCHQDpCZtKzpnZ1sWKJY/edit?usp=sharing). In the following tutorial I am using one individual as an example **ERR1019076**, please change it depending on wich individual you got.
+The individuals for each person is written in the spreadsheet [here](https://docs.google.com/spreadsheets/d/1OEHI1tNiwHrwKkl9L5rPtbVKCHQDpCZtKzpnZ1sWKJY/edit?usp=sharing). In the following tutorial I am using one individual as an example **ERR1019076**, please replace it by the individual you've got.
 
 ## Mapping reads against the reference
 
@@ -100,7 +100,7 @@ samtools index ERR1019076.bam
 ```
 
 ## IGV software
-IGV is a Integrative Genomics viewer and can be very useful to look at the results of Mapping and SNP calling.
+IGV is an Integrative Genomics viewer and can be very useful to look at the results of Mapping and SNP calling.
 We have not installed it in the cluster, so you can download it to your machine you can go to its [website](http://software.broadinstitute.org/software/igv/).
 Three files are necessary to look at this dataset: a reference sequence and the **.bam** and **.bai** files, download it from the cluster in a specific directory. Since we are using a human reference, the sequence is already available in the software: 
 

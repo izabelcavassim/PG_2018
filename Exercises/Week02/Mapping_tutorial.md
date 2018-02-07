@@ -54,7 +54,7 @@ directory as users folder. The individuals for each person is written in
 the spreadsheet
 [here](https://docs.google.com/spreadsheets/d/1OEHI1tNiwHrwKkl9L5rPtbVKCHQDpCZtKzpnZ1sWKJY/edit?usp=sharing).
 In the following tutorial I am using one individual as an example
-**ERR1019076**, please change it depending on wich individual you got.
+**ERR1019076**, please replace it by the individual you've got.
 
 Mapping reads against the reference
 -----------------------------------
@@ -114,7 +114,7 @@ navigate.
 IGV software
 ------------
 
-IGV is a Integrative Genomics viewer and can be very useful to look at
+IGV is an Integrative Genomics viewer and can be very useful to look at
 the results of Mapping and SNP calling. We have not installed it in the
 cluster, so you can download it to your machine you can go to its
 [website](http://software.broadinstitute.org/software/igv/). Three files
