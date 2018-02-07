@@ -49,8 +49,12 @@ Data source
 You will be separated in pairs so you can help each other out with the
 commands. Each of you will be responsible for 2 individuals and at the
 end of this exercise we will estimate the SNP heterozygosity per
-individual. The data is placed in a folder called Data in the same
-directory as users folder.
+individual. The data is placed in a folder called **Data** in the same
+directory as users folder. The individuals for each person is written in
+the spreadsheet
+[here](https://docs.google.com/spreadsheets/d/1OEHI1tNiwHrwKkl9L5rPtbVKCHQDpCZtKzpnZ1sWKJY/edit?usp=sharing).
+In the following tutorial I am using one individual as an example
+**ERR1019076**, please change it depending on wich individual you got.
 
 Mapping reads against the reference
 -----------------------------------
@@ -131,7 +135,7 @@ illustration](https://github.com/izabelcavassim/PG_2018/blob/master/Exercises/We
 
 Try to understand what are the different attributes present in the
 viewer. If you zoom in very much you will find single nucleotide
-polimorphisms (SNPs), where the reference sequence does not have the
+polymorphisms (SNPs), where the reference sequence does not have the
 same nucleotide as the data mapped to.
 
 Plotting results
@@ -194,14 +198,14 @@ terminal, you just need to type R.
     ## Saving 7 x 5 in image
 
 What are the conclusions you can extract from these analysis? Does the
-covergae match with what you observed with IGV?
+coverage match with what you observed with IGV?
 
 SNP calling
 -----------
 
 Even though just a tiny portion (around 2%) of our genomes are based of
 protein coding regions, this partition contains most of the disease
-causal variants (mutations), and thats why variant calling is so
+causal variants (mutations), and that is why variant calling is so
 important in a medical point of view. In the population genetics side of
 view it is also possible to use these variants to establish differences
 between individuals, populations and species. It can also be used to
@@ -212,7 +216,7 @@ Once we have mapped our reads we can now start with variant detection.
 For now we will be using the software **Platypus**: a tool designed for
 efficient and accurate variant-detection in high-throughput sequencing
 data. You can access their website
-[here](http://www.well.ox.ac.uk/platypus)
+[here](http://www.well.ox.ac.uk/platypus).
 
     python Platypus.py callVariants --bamFiles=ERR1019076.bam --refFile=/home/mica16/simons/faststorage/data/cteam_lite_public3/FullyPublic/Href.fa output=AllVariants.vcf
 
