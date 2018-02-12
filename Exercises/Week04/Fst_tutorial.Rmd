@@ -4,8 +4,11 @@ author: "Maria Izabel cavassim Alves"
 date: '`r Sys.Date()`'
 output:
   md_document:
-  variant: markdown_github
+    variant: markdown_github
 ---
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
 
 ## F-statistics from genotypic data:
 
