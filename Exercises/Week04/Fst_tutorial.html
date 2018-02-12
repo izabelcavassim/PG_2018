@@ -1,0 +1,221 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Style-Type" content="text/css" />
+  <meta name="generator" content="pandoc" />
+  <meta name="author" content="Maria Izabel cavassim Alves" />
+  <meta name="date" content="2018-02-12" />
+  <title>FST_exercise</title>
+  <style type="text/css">code{white-space: pre;}</style>
+  <style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+  </style>
+</head>
+<body>
+<div id="header">
+<h1 class="title">FST_exercise</h1>
+<h2 class="author">Maria Izabel cavassim Alves</h2>
+<h3 class="date">2018-02-12</h3>
+</div>
+<h2 id="f-statistics-from-genotypic-data">F-statistics from genotypic data:</h2>
+<p>In this exercise we will estimate the <strong>Fst</strong>, which is the expected level of heterozygosity in a population. The expected heterozygosity frequencies are drawn under the conditions of <strong>Hardy-Weiberg Theorem</strong>. It can be used to measure also the genetic variation across populations, by looking at the deviations of genetic diversity withing subpopulations (<span class="math inline"><em>H</em><sub><em>S</em></sub></span>) to the genetic diversity of the total population (<span class="math inline"><em>H</em><sub><em>T</em></sub></span>):</p>
+<p><br /><span class="math display">$$
+F_{ST} = \frac{H_T - H_S}{H_T}
+$$</span><br /></p>
+<p>9 equations will be used in this exercise:</p>
+<p>1 Calculation of allele frequencies:</p>
+<p><span class="math inline">$p = \frac{(2AA + Aa)}{2N}$</span></p>
+<p>2 Calculation of the expected genotypic counts under HWE:</p>
+<ul>
+<li>Expected AA = <span class="math inline"><em>p</em><sup>2</sup> * <em>N</em></span></li>
+<li>Expected Aa = <span class="math inline">2<em>p</em> * <em>q</em> * <em>N</em></span></li>
+<li>Expected aa = <span class="math inline"><em>q</em><sup>2</sup> * <em>N</em></span></li>
+</ul>
+<p>3 Calculate the local observed heterozygosity</p>
+<p><span class="math inline">$H_{obs} = \frac{Aa}{N}$</span></p>
+<p>4 Calculate the local expected heterozygosity</p>
+<p><span class="math inline"><em>H</em><sub><em>e</em><em>x</em><em>p</em></sub> = 2<em>p</em><em>q</em></span></p>
+<ol start="5" style="list-style-type: decimal">
+<li>Calculate the local inbreeding coefficient of each subpopulation</li>
+</ol>
+<p><span class="math inline">$F_S = \frac{H_{exp} -H_{obs}}{H_{exp}}$</span></p>
+<ol start="6" style="list-style-type: decimal">
+<li>Calculate <span class="math inline">$\bar{p}$</span> (the frequency pf allele <strong>A</strong> over the total population)</li>
+</ol>
+<p><span class="math inline">$\bar{p} = \frac{2*AA_{pop1} + Aa_{pop1} + 2*AA_{pop2} + Aa_{pop2} + 2*AA_{pop3} + Aa_{pop3}}{2*N_{pop1} 2*N_{pop2} + 2*N_{pop3}}$</span></p>
+<ol start="7" style="list-style-type: decimal">
+<li>Calculate <span class="math inline">$\bar{q}$</span> (the frequency pf allele <strong>a</strong> over the total population)</li>
+</ol>
+<p><span class="math inline">$\bar{q} = \frac{2*aa_{pop1} + Aa_{pop1} + 2*aa_{pop2} + Aa_{pop2} + 2*aa_{pop3} + Aa_{pop3}}{2*N_{pop1} 2*N_{pop2} + 2*N_{pop3}}$</span></p>
+<ol start="8" style="list-style-type: decimal">
+<li><p>Calculate the global heterozygosity indices ( over <strong>I</strong>ndividuals, <strong>S</strong>ubpopulations and <strong>T</strong>otal population)</p></li>
+<li><p><span class="math inline"><em>H</em><sub><em>I</em></sub></span> based on observed heterozygosties in individuals in subpopulations:</p></li>
+</ol>
+<p><span class="math inline">$H_I =\frac{H_{obs1}*N_1 + H_{obs2}*N_2 + H_{obs3}*N_{3}}{N{total}}$</span></p>
+<ol start="2" style="list-style-type: decimal">
+<li><span class="math inline"><em>H</em><sub><em>S</em></sub></span> based on <strong>expected</strong> heterozygosities in <strong>subpopulations</strong>:</li>
+</ol>
+<p><span class="math inline">$H_S =\frac{H_{exp1}*N_1 + H_{exp2}*N_2 + H_{exp3}*N_3}{N_{total}}$</span></p>
+<ol start="3" style="list-style-type: decimal">
+<li><p><span class="math inline"><em>H</em><sub><em>T</em></sub></span> based o expected heterozygosities for overall total population: <span class="math inline">$H_T = 2\bar{p}\bar{q}$</span></p></li>
+<li><p>Calculate the Fst:</p></li>
+</ol>
+<p><span class="math inline">$F_{ST} = \frac{H_T - H_S}{H_T}$</span></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## Let&#39;s imagine that we have the following genotypes and genotype frequencies in each population:
+M &lt;-<span class="st"> </span><span class="kw">as.matrix</span>(<span class="kw">rbind</span>(<span class="kw">c</span>(<span class="dv">125</span>, <span class="dv">250</span>, <span class="dv">125</span>), <span class="kw">c</span>(<span class="dv">50</span>, <span class="dv">30</span>, <span class="dv">20</span>), <span class="kw">c</span>(<span class="dv">100</span>, <span class="dv">500</span>, <span class="dv">400</span>)))
+<span class="kw">dimnames</span>(M) &lt;-<span class="st"> </span><span class="kw">list</span>(<span class="kw">c</span>(<span class="st">&quot;Pop1&quot;</span>, <span class="st">&quot;Pop2&quot;</span>, <span class="st">&quot;Pop3&quot;</span>), <span class="kw">c</span>(<span class="st">&quot;AA&quot;</span>,<span class="st">&quot;Aa&quot;</span>, <span class="st">&quot;aa&quot;</span>))
+
+<span class="kw">print</span>(M)</code></pre></div>
+<pre><code>##       AA  Aa  aa
+## Pop1 125 250 125
+## Pop2  50  30  20
+## Pop3 100 500 400</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># What is the number of individuals genotyped in each population?</span>
+N =<span class="st"> </span><span class="kw">rowSums</span>(M)
+
+<span class="co"># Now let&#39;s calculate the allele frequencies in each population. Remember that the number of alleles is twice the number of genotypes.</span>
+
+<span class="co"># Allele A: </span>
+pop1_p =<span class="st"> </span>(<span class="dv">2</span>*M[<span class="dv">1</span>,<span class="dv">1</span>] +<span class="st"> </span>M[<span class="dv">1</span>,<span class="dv">2</span>])/(<span class="dv">2</span>*N[[<span class="dv">1</span>]])
+
+<span class="co"># Allele a:</span>
+pop1_q =<span class="st"> </span>(<span class="dv">2</span>*M[<span class="dv">1</span>,<span class="dv">3</span>] +<span class="st"> </span>M[<span class="dv">1</span>,<span class="dv">2</span>])/(<span class="dv">2</span>*N[[<span class="dv">1</span>]])
+
+<span class="co"># Calculate the observed frequency of allele A for the other 2 populations</span>
+
+
+<span class="co"># Now calculate the local observed heterozygosity:</span>
+
+H_obs_pop1 =<span class="st"> </span><span class="dv">250</span>/<span class="dv">500</span>
+H_obs_pop2 =<span class="st"> </span><span class="dv">30</span>/<span class="dv">100</span>
+H_obs_pop3 =<span class="st"> </span><span class="dv">500</span>/<span class="dv">1000</span>
+
+<span class="co"># What would be the expected heterozygosity? Remember about the concepts of Hardy Weinberg equilibrium:</span>
+H_exp_pop1 =<span class="st"> </span><span class="dv">2</span>*pop1_p*pop1_q
+
+<span class="co"># What is the local inbreeding coefficient of each population?</span>
+<span class="co">#F_s = (H_exp - H_obs )/ (H_exp)</span>
+
+F_s_pop1 =<span class="st"> </span>(H_exp_pop1 -<span class="st"> </span>H_obs_pop1) /<span class="st"> </span>H_exp_pop1
+
+<span class="co"># Now calculate the frequency of allele A over the total population (remember to mutiple the N frequencies):</span>
+A_s =<span class="st"> </span>(<span class="dv">2</span>*<span class="kw">colSums</span>(M)[[<span class="dv">1</span>]] +<span class="st"> </span><span class="kw">colSums</span>(M)[[<span class="dv">2</span>]])/(<span class="dv">2</span>*<span class="kw">sum</span>(<span class="kw">rowSums</span>(M)))
+a_s =<span class="st"> </span>(<span class="dv">2</span>*<span class="kw">colSums</span>(M)[[<span class="dv">3</span>]] +<span class="st"> </span><span class="kw">colSums</span>(M)[[<span class="dv">2</span>]])/(<span class="dv">2</span>*<span class="kw">sum</span>(<span class="kw">rowSums</span>(M)))
+
+<span class="co"># Check if the calculations make sense. p + q must be equal to 1</span>
+A_s +<span class="st"> </span>a_s</code></pre></div>
+<pre><code>## [1] 1</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Now calculate the expected heterozygosity in subpopulations: </span></code></pre></div>
+<h1 id="applying-fst-in-a-real-dataset">Applying Fst in a real dataset:</h1>
+<h2 id="hgdp-ceph-human-genome-diversity-cell-line-panel">HGDP-CEPH Human Genome Diversity Cell Line Panel</h2>
+<p>In the next exercise we will be using the data from HGDP Panel, a consortium created to allow further research in human population genetics.<br />
+A resource of 1063 lymphoblastoid cell lines (LCLs) from 1050 individuals in 52 world populations and corresponding milligram quantities of DNA is banked at the Foundation Jean Dausset-CEPH in Paris. These LCLs were collected from various laboratories by the Human Genome Diversity Project (HGDP) and CEPH in order to provide unlimited supplies of DNA and RNA for studies of sequence diversity and history of modern human populations. Information for each LCL is limited to sex of the individual, population and geographic origin.</p>
+<div class="figure">
+<img src="/Users/PM/Dropbox/PG2018/exercises/Fst_HGDP/HGDP-panel.png" alt="Caption for the picture." />
+<p class="caption">Caption for the picture.</p>
+</div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#With the HGDP dataset</span>
+
+<span class="co">#install.packages(&#39;BEDASSLE&#39;)</span>
+<span class="kw">library</span>(BEDASSLE)
+
+<span class="kw">data</span>(HGDP.bedassle.data)
+
+<span class="co"># Have a loog at what variables the data contain:</span>
+?<span class="kw">HGDP.bedassle.data</span>()
+
+<span class="co"># How many populations does the data include?</span>
+HGDP.bedassle.data$hgdp.metadata$Population</code></pre></div>
+<pre><code>##  [1] &quot;Adygei&quot;      &quot;Basque&quot;      &quot;Italian&quot;     &quot;French&quot;      &quot;Orcadian&quot;   
+##  [6] &quot;Russian&quot;     &quot;Sardinian&quot;   &quot;Tuscan&quot;      &quot;Bedouin&quot;     &quot;Druze&quot;      
+## [11] &quot;Mozabite&quot;    &quot;Palestinian&quot; &quot;Balochi&quot;     &quot;Brahui&quot;      &quot;Burusho&quot;    
+## [16] &quot;Hazara&quot;      &quot;Kalash&quot;      &quot;Makrani&quot;     &quot;Pathan&quot;      &quot;Sindhi&quot;     
+## [21] &quot;Cambodian&quot;   &quot;Dai&quot;         &quot;Daur&quot;        &quot;Han&quot;         &quot;Hezhen&quot;     
+## [26] &quot;Japanese&quot;    &quot;Lahu&quot;        &quot;Miao&quot;        &quot;Mongola&quot;     &quot;Naxi&quot;       
+## [31] &quot;Oroqen&quot;      &quot;She&quot;         &quot;Tu&quot;          &quot;Tujia&quot;       &quot;Uygur&quot;      
+## [36] &quot;Xibo&quot;        &quot;Yakut&quot;       &quot;Yi&quot;</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#Draw 2 populations at random from the Eurasian HGDP dataset</span>
+    pop1 &lt;-<span class="st"> </span><span class="kw">sample</span>(<span class="kw">nrow</span>(HGDP.bedassle.data$allele.counts),<span class="dv">1</span>)
+    pop2 &lt;-<span class="st"> </span><span class="kw">sample</span>(<span class="kw">nrow</span>(HGDP.bedassle.data$allele.counts),<span class="dv">1</span>)
+
+<span class="co">#Calculate unbiased Fst between them</span>
+    pairwise.Fst &lt;-<span class="st"> </span><span class="kw">calculate.pairwise.Fst</span>(
+        HGDP.bedassle.data$allele.counts[<span class="kw">c</span>(pop1,pop2),],
+        HGDP.bedassle.data$sample.sizes[<span class="kw">c</span>(pop1,pop2),]  
+    )
+
+<span class="co">#Print that Fst to the console</span>
+    <span class="kw">print</span>(<span class="kw">sprintf</span>(<span class="st">&quot;Fst between the %s population and the %s population is %s&quot;</span>,
+        HGDP.bedassle.data$hgdp.metadata[pop1,<span class="dv">1</span>],
+        HGDP.bedassle.data$hgdp.metadata[pop2,<span class="dv">1</span>],
+        <span class="kw">round</span>(pairwise.Fst,<span class="dv">3</span>))
+     )</code></pre></div>
+<pre><code>## [1] &quot;Fst between the Italian population and the Bedouin population is 0.019&quot;</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Now Calculate the Fst between populations from &quot;French&quot; and &quot;Hezhen&quot;</span>
+    (pairwise.Fst &lt;-<span class="st"> </span><span class="kw">calculate.pairwise.Fst</span>(
+        HGDP.bedassle.data$allele.counts[<span class="kw">c</span>(<span class="st">&quot;French&quot;</span>,<span class="st">&quot;Hezhen&quot;</span>),],
+        HGDP.bedassle.data$sample.sizes[<span class="kw">c</span>(<span class="st">&quot;French&quot;</span>,<span class="st">&quot;Hezhen&quot;</span>),]  
+    ))</code></pre></div>
+<pre><code>## [1] 0.09608346</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#Calculate pairwise Fst between all population pairs</span>
+    hgdp.pairwise.Fst &lt;-<span class="st"> </span><span class="kw">calculate.all.pairwise.Fst</span>(
+        HGDP.bedassle.data$allele.counts,
+        HGDP.bedassle.data$sample.sizes
+    )   
+
+<span class="kw">colnames</span>(hgdp.pairwise.Fst) =<span class="st"> </span>HGDP.bedassle.data$hgdp.metadata$Population
+<span class="kw">rownames</span>(hgdp.pairwise.Fst) =<span class="st"> </span>HGDP.bedassle.data$hgdp.metadata$Population
+<span class="kw">heatmap</span>(hgdp.pairwise.Fst, <span class="dt">names =</span> HGDP.bedassle.data$hgdp.metadata$Population)</code></pre></div>
+<pre><code>## Warning in plot.window(...): &quot;names&quot; is not a graphical parameter</code></pre>
+<pre><code>## Warning in plot.xy(xy, type, ...): &quot;names&quot; is not a graphical parameter</code></pre>
+<pre><code>## Warning in title(...): &quot;names&quot; is not a graphical parameter</code></pre>
+<p><img src="Fst_tutorial_files/figure-html/unnamed-chunk-2-1.png" /><!-- --></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">    <span class="co">#Plot pairwise Fst against geographic distance</span>
+    <span class="kw">plot</span>(HGDP.bedassle.data$GeoDistance,
+        hgdp.pairwise.Fst,
+        <span class="dt">pch=</span><span class="dv">19</span>,
+        <span class="dt">col=</span>HGDP.bedassle.data$EcoDistance<span class="dv">+1</span>,
+        <span class="dt">ylab=</span><span class="st">&quot;pairwise Fst&quot;</span>,
+        <span class="dt">xlab=</span><span class="st">&quot;geographic distance&quot;</span>,
+        <span class="dt">main=</span><span class="st">&quot;isolation by distance&quot;</span>)
+            <span class="kw">legend</span>(<span class="dt">x=</span><span class="st">&quot;bottomright&quot;</span>,<span class="dt">pch=</span><span class="dv">19</span>,<span class="dt">col=</span><span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>),
+                <span class="dt">legend=</span><span class="kw">c</span>(<span class="st">&quot;same side of Himalayas&quot;</span>,
+                        <span class="st">&quot;opposite sides of Himalayas&quot;</span>))</code></pre></div>
+<p><img src="Fst_tutorial_files/figure-html/unnamed-chunk-2-2.png" /><!-- --></p>
+</body>
+</html>

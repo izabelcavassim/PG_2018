@@ -14,7 +14,9 @@ knitr::opts_chunk$set(echo = TRUE)
 
 In this exercise we will estimate the **Fst**, which is the expected level of heterozygosity in a population. The expected heterozygosity frequencies are drawn under the conditions of **Hardy-Weiberg Theorem**. It can be used to measure also the genetic variation across populations, by looking at the deviations of genetic diversity withing subpopulations ($H_S$) to the genetic diversity of the total population ($H_T$):
 
-$F_{ST} = \frac{H_T - H_S}{H_T}$
+$$
+F_{ST} = \frac{H_T - H_S}{H_T}
+$$
 
 9 equations will be used in this exercise:
 

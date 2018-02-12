@@ -3,7 +3,9 @@ F-statistics from genotypic data:
 
 In this exercise we will estimate the **Fst**, which is the expected level of heterozygosity in a population. The expected heterozygosity frequencies are drawn under the conditions of **Hardy-Weiberg Theorem**. It can be used to measure also the genetic variation across populations, by looking at the deviations of genetic diversity withing subpopulations (*H*<sub>*S*</sub>) to the genetic diversity of the total population (*H*<sub>*T*</sub>):
 
-$F\_{ST} = \\frac{H\_T - H\_S}{H\_T}$
+$$
+F\_{ST} = \\frac{H\_T - H\_S}{H\_T}
+$$
 
 9 equations will be used in this exercise:
 
@@ -163,7 +165,7 @@ HGDP.bedassle.data$hgdp.metadata$Population
      )
 ```
 
-    ## [1] "Fst between the Mongola population and the Kalash population is 0.098"
+    ## [1] "Fst between the She population and the Tujia population is 0.011"
 
 ``` r
 # Now Calculate the Fst between populations from "French" and "Hezhen"
