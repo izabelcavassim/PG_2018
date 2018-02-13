@@ -1,14 +1,103 @@
 ---
-title: "Bayesian linear regression"
-author: "Maria Izabel Cavassim Alves"
-date: "`r Sys.Date()`"
-output:
-  md_document:
-    variant: markdown_github
----
+# vcfR exercises
+____
 
-## Week
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+## Data
+In this exercise we will analyse a vcf-file like the one you created yourselves last week. We will only use R so you can do the analyses on your own machine this week. The vcf-file is called `chr2_135_145.vcf.gz` and you can download it from Materials/Week3 on blackboard.
+
+## vcfR
+In this exercise will use the R package `vcfR` to read vcf-files into R. We can read the vcf-file like this:
+
+```{r read data, echo=F}
+library(vcfR)
+vcf <- read.vcfR("chr2_135_145.vcf.gz")
 ```
 
+We will use the `dplyr` package to analyse the data so we want the data to be in "tidy" format. We can get that by using the vcfR2tidy function.
+
+```{r make data tidy, echo=F}
+tvcf <- vcfR2tidy(vcf, 
+          single_frame = TRUE,
+          info_fields = c("TR"),
+          format_fields = c("GT","GQ","NR"),
+          info_types = TRUE,
+          format_types = c(NR="i",GQ="i"))
+```
+
+We also want ta add some info about the samples:
+```{r add metadata,echo=F}
+library(dplyr)
+info <- read.csv2("sample_infos_accessionnb.csv")
+d <- inner_join(tvcf$dat,info, by= c("Indiv" = "ENA.RUN")) %>%
+  mutate(gt_GT=replace(gt_GT, gt_GT=="1/0", "0/1"))
+```
+
+Now `d` contains the relevant data in "tidy" format. We can fx. count the fraction of missing genotypes for each individual:
+```{r missing}
+d %>% 
+  group_by(Indiv) %>%
+  summarise(missing = mean(is.na(gt_GT))) 
+```
+
+And we can plot it using ggplot:
+```{r plot missing}
+library(ggplot2)
+d %>% 
+  group_by(Indiv) %>%
+  summarise(missing = mean(is.na(gt_GT))) %>%
+  ggplot(aes(x=Indiv,y=missing)) + geom_col() + coord_flip()
+```
+
+As you can see individual `ERR1025639` is an outlier so we want to remove that individual from the analyses.
+```{r plot missing 2}
+d <- d %>% filter(Indiv!="ERR1025639")
+```
+
+*1) Which individual has the largest amount of missing data now?*
+
+*2) Some variants have values different from "PASS" in the FILTER column. These variants should be removed. Does that change the fraction of missing data?*
+
+*3) The column gt_NR contains the number of reads covering the position. What is the average depth in the data set?*
+
+*4) If a variant is heterozygous the gt_GT variable will have the value "0/1". Make a plot of the number of variants that are heterozygous for each individual. Which population has the highest fraction of heterozygous variants in this genomic region?*
+
+All the variants we look at are bi-allelic so we can calculate the allele frequences in each sub-population (region) like this (it's a bit slow):
+```{r}
+d2 <- d %>%
+  group_by(POS,region) %>%
+  summarise(na=sum(gt_GT=="0/1",na.rm=T)+2*sum(gt_GT=="0/0",na.rm=T),
+            nA=sum(gt_GT=="0/1",na.rm=T)+2*sum(gt_GT=="1/1",na.rm=T))  %>%
+  mutate(pS=na/(na+nA), qS= nA/(na+nA))
+```
+
+We can then plot the number of polymorphic sites for each region:
+```{r}
+d2 %>% 
+  filter(na!=0, nA!=0) %>%
+  ggplot(aes(x=region, fill=region)) + geom_bar() + coord_flip()
+```
+
+## Calculating F-statistics
+
+A description of `F_ST` can be found in Box 5.2. on page 147 of HEG.
+
+*5) Use `d2` from above to calculate `H_S` for each region. `H_S` is the average expected heterozygosity.  The expected heterozygosity for a single variant is `2*p_S*q_S`.*
+
+*6) Calculate `H_T` (the average expected heterozygosity for the total population)*
+
+*7) Calculate the fixation index `F_ST = 1 - H_S/H_T`*
+
+We can also look at bins of a given size along the genome (to keep it simple we will just plot non-overlapping bins instead of sliding windows). We can fx. plot the fraction of sites in each bin that are polymorphic for each subpopulation:
+```{r}
+bin_width = 500000
+d2 %>% 
+  mutate(binmid=((as.integer(POS/bin_width)+0.5)*bin_width)) %>%
+  filter(na!=0, nA!=0) %>%
+  group_by(binmid, region) %>%
+  summarise(frac_polymorph=n()/bin_width) %>%
+  ggplot(aes(x=binmid, y=frac_polymorph, color=region)) + geom_line()
+```
+
+*8) Plot `H_S` in bins along the genome.*
+
+*9) Plot `F_ST` in bins along the genome.*
