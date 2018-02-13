@@ -3,20 +3,18 @@ F-statistics from genotypic data:
 
 In this exercise we will estimate the **Fst**, which is the expected level of heterozygosity in a population. The expected heterozygosity frequencies are drawn under the conditions of **Hardy-Weiberg Theorem**. It can be used to measure also the genetic variation across populations, by looking at the deviations of genetic diversity withing subpopulations (*H*<sub>*S*</sub>) to the genetic diversity of the total population (*H*<sub>*T*</sub>):
 
-$$
-F\_{ST} = \\frac{H\_T - H\_S}{H\_T}
-$$
+$F\_{ST} \\frac{H\_T - H\_S}{H\_T}$
 
 9 equations will be used in this exercise:
 
 1 Calculation of allele frequencies:
 
-$p = \\frac{(2AA + Aa)}{2N}$
+*p* = $
 
 2 Calculation of the expected genotypic counts under HWE:
 
 -   Expected AA = *p*<sup>2</sup> \* *N*
--   Expected Aa = 2*p* \* *q* \* *N*
+-   Expected Aa = 2*p**q* \* *N*
 -   Expected aa = *q*<sup>2</sup> \* *N*
 
 3 Calculate the local observed heterozygosity
@@ -74,7 +72,7 @@ N = rowSums(M)
 
 # Now let's calculate the allele frequencies in each population. Remember that the number of alleles is twice the number of genotypes.
 
-# Allele A: 
+# Allele A:
 pop1_p = (2*M[1,1] + M[1,2])/(2*N[[1]])
 
 # Allele a:
@@ -108,7 +106,7 @@ A_s + a_s
     ## [1] 1
 
 ``` r
-# Now calculate the expected heterozygosity in subpopulations: 
+# Now calculate the expected heterozygosity in subpopulations:
 ```
 
 Applying Fst in a real dataset:
@@ -154,7 +152,7 @@ HGDP.bedassle.data$hgdp.metadata$Population
 #Calculate unbiased Fst between them
     pairwise.Fst <- calculate.pairwise.Fst(
         HGDP.bedassle.data$allele.counts[c(pop1,pop2),],
-        HGDP.bedassle.data$sample.sizes[c(pop1,pop2),]  
+        HGDP.bedassle.data$sample.sizes[c(pop1,pop2),]
     )
 
 #Print that Fst to the console
@@ -165,13 +163,13 @@ HGDP.bedassle.data$hgdp.metadata$Population
      )
 ```
 
-    ## [1] "Fst between the She population and the Tujia population is 0.011"
+    ## [1] "Fst between the Han population and the Adygei population is 0.096"
 
 ``` r
 # Now Calculate the Fst between populations from "French" and "Hezhen"
     (pairwise.Fst <- calculate.pairwise.Fst(
         HGDP.bedassle.data$allele.counts[c("French","Hezhen"),],
-        HGDP.bedassle.data$sample.sizes[c("French","Hezhen"),]  
+        HGDP.bedassle.data$sample.sizes[c("French","Hezhen"),]
     ))
 ```
 
@@ -182,7 +180,7 @@ HGDP.bedassle.data$hgdp.metadata$Population
     hgdp.pairwise.Fst <- calculate.all.pairwise.Fst(
         HGDP.bedassle.data$allele.counts,
         HGDP.bedassle.data$sample.sizes
-    )   
+    )
 
 colnames(hgdp.pairwise.Fst) = HGDP.bedassle.data$hgdp.metadata$Population
 rownames(hgdp.pairwise.Fst) = HGDP.bedassle.data$hgdp.metadata$Population

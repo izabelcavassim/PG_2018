@@ -1,5 +1,5 @@
 ---
-title: "FST_exercise"
+title: "FST Exercise"
 author: "Maria Izabel cavassim Alves"
 date: '`r Sys.Date()`'
 output:
@@ -14,29 +14,30 @@ knitr::opts_chunk$set(echo = TRUE)
 
 In this exercise we will estimate the **Fst**, which is the expected level of heterozygosity in a population. The expected heterozygosity frequencies are drawn under the conditions of **Hardy-Weiberg Theorem**. It can be used to measure also the genetic variation across populations, by looking at the deviations of genetic diversity withing subpopulations ($H_S$) to the genetic diversity of the total population ($H_T$):
 
-$$
-F_{ST} = \frac{H_T - H_S}{H_T}
-$$
+
+$F_{ST} = \frac{H_T - H_S}{H_T}$
 
 9 equations will be used in this exercise:
 
 1 Calculation of allele frequencies:
 
-$p = \frac{(2AA + Aa)}{2N}$ 
+$p$ = \frac{(2AA + Aa)}{2N}$
 
 2 Calculation of the expected genotypic counts under HWE:
 
 * Expected AA = $p^2*N$
-* Expected Aa = $2p*q*N$ 
+* Expected Aa = $2pq*N$
 * Expected aa = $q^2*N$
 
-3 Calculate the local observed heterozygosity 
+3 Calculate the local observed heterozygosity
 
 $H_{obs} = \frac{Aa}{N}$
 
 4 Calculate the local expected heterozygosity
 
-$H_{exp} = 2pq$
+$$
+H_{exp} = 2pq
+$$
 
 5. Calculate the local inbreeding coefficient of each subpopulation
 
@@ -78,7 +79,7 @@ N = rowSums(M)
 
 # Now let's calculate the allele frequencies in each population. Remember that the number of alleles is twice the number of genotypes.
 
-# Allele A: 
+# Allele A:
 pop1_p = (2*M[1,1] + M[1,2])/(2*N[[1]])
 
 # Allele a:
@@ -108,17 +109,17 @@ a_s = (2*colSums(M)[[3]] + colSums(M)[[2]])/(2*sum(rowSums(M)))
 # Check if the calculations make sense. p + q must be equal to 1
 A_s + a_s
 
-# Now calculate the expected heterozygosity in subpopulations: 
+# Now calculate the expected heterozygosity in subpopulations:
 
 
 ```
 
-# Applying Fst in a real dataset: 
+# Applying Fst in a real dataset:
 
 ## HGDP-CEPH Human Genome Diversity Cell Line Panel
 
 In the next exercise we will be using the data from HGDP Panel, a consortium created to allow further research in human population genetics.  
-A resource of 1063 lymphoblastoid cell lines (LCLs) from 1050 individuals in 52 world populations and corresponding milligram quantities of DNA is banked at the Foundation Jean Dausset-CEPH in Paris. These LCLs were collected from various laboratories by the Human Genome Diversity Project (HGDP) and CEPH in order to provide unlimited supplies of DNA and RNA for studies of sequence diversity and history of modern human populations. Information for each LCL is limited to sex of the individual, population and geographic origin. 
+A resource of 1063 lymphoblastoid cell lines (LCLs) from 1050 individuals in 52 world populations and corresponding milligram quantities of DNA is banked at the Foundation Jean Dausset-CEPH in Paris. These LCLs were collected from various laboratories by the Human Genome Diversity Project (HGDP) and CEPH in order to provide unlimited supplies of DNA and RNA for studies of sequence diversity and history of modern human populations. Information for each LCL is limited to sex of the individual, population and geographic origin.
 
 ![Caption for the picture.](/Users/PM/Dropbox/PG2018/exercises/Fst_HGDP/HGDP-panel.png)
 
@@ -143,7 +144,7 @@ HGDP.bedassle.data$hgdp.metadata$Population
 #Calculate unbiased Fst between them
 	pairwise.Fst <- calculate.pairwise.Fst(
 		HGDP.bedassle.data$allele.counts[c(pop1,pop2),],
-		HGDP.bedassle.data$sample.sizes[c(pop1,pop2),]	
+		HGDP.bedassle.data$sample.sizes[c(pop1,pop2),]
 	)
 
 #Print that Fst to the console
@@ -152,24 +153,24 @@ HGDP.bedassle.data$hgdp.metadata$Population
 		HGDP.bedassle.data$hgdp.metadata[pop2,1],
 		round(pairwise.Fst,3))
 	 )
-	
+
 # Now Calculate the Fst between populations from "French" and "Hezhen"
 	(pairwise.Fst <- calculate.pairwise.Fst(
 		HGDP.bedassle.data$allele.counts[c("French","Hezhen"),],
-		HGDP.bedassle.data$sample.sizes[c("French","Hezhen"),]	
+		HGDP.bedassle.data$sample.sizes[c("French","Hezhen"),]
 	))
 
 #Calculate pairwise Fst between all population pairs
 	hgdp.pairwise.Fst <- calculate.all.pairwise.Fst(
 		HGDP.bedassle.data$allele.counts,
 		HGDP.bedassle.data$sample.sizes
-	)	
+	)
 
 colnames(hgdp.pairwise.Fst) = HGDP.bedassle.data$hgdp.metadata$Population
 rownames(hgdp.pairwise.Fst) = HGDP.bedassle.data$hgdp.metadata$Population
 heatmap(hgdp.pairwise.Fst, names = HGDP.bedassle.data$hgdp.metadata$Population)
 
-	
+
 	#Plot pairwise Fst against geographic distance
 	plot(HGDP.bedassle.data$GeoDistance,
 		hgdp.pairwise.Fst,
@@ -182,5 +183,3 @@ heatmap(hgdp.pairwise.Fst, names = HGDP.bedassle.data$hgdp.metadata$Population)
 				legend=c("same side of Himalayas",
 						"opposite sides of Himalayas"))
 ```
-
-
