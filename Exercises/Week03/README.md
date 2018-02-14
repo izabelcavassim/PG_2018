@@ -84,11 +84,16 @@ d2 %>%
 
 A description of `F_ST` can be found in Box 5.2. on page 147 of HEG.
 
-*5) Use `d2` from above to calculate `H_S` for each region. `H_S` is the average expected heterozygosity.  The expected heterozygosity for a single variant is `2*p_S*q_S`.*
+`F_ST` can be calculated as `F_ST = 1- (H_S/H_T)`. Where `H_T` is the expected heterozygocity of the entire population and `H_S` is the mean expected heterozygocity across subpopulations.
+Using `d2` from above you can calculate `H_S` as `H_S=mean(2*pS*qS)` and `H_T=2*mean(pS)*mean(qS)`.
 
-*6) Calculate `H_T` (the average expected heterozygosity for the total population)*
+*5) Use `d2` from above to calculate `F_ST` for each position. What is the median F_ST value?*
 
-*7) Calculate the fixation index `F_ST = 1 - H_S/H_T`*
+*6) Make a histogram of the `F_ST` values.*
+
+*7) Calculate `F_ST` using only the European and African samples and make a histogram of the values.*
+
+*8) Make a plot with the genomic position on the x axis and the `F_ST` value on the y axis.*
 
 We can also look at bins of a given size along the genome (to keep it simple we will just plot non-overlapping bins instead of sliding windows). We can fx. plot the fraction of sites in each bin that are polymorphic for each subpopulation:
 ```{r}
@@ -101,6 +106,5 @@ d2 %>%
   ggplot(aes(x=binmid, y=frac_polymorph, color=region)) + geom_line()
 ```
 
-*8) Plot `H_S` in bins along the genome.*
+*9) Make a plot with average F_ST in bins along the genome*
 
-*9) Plot `F_ST` in bins along the genome.*
