@@ -241,7 +241,7 @@ Activating an environment:
 
 Installing platypus:
 
-    conda update platypus-variant
+    conda install -c bioconda platypus-variant
 
     platypus callVariants --bamFiles=ERR1019076.bam --refFile= /home/Data/Homo_sapiens.GRCh37.75.dna.chromosome.2.fa --output=AllVariants.vcf
 
