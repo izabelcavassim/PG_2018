@@ -184,7 +184,7 @@ conda activate Mapping_environment
 
 Installing platypus:
 ```{r, engine = 'bash', eval = FALSE}
-conda update platypus-variant
+conda install -c bioconda platypus-variant
 ```
 
 ```{r, engine = 'bash', eval = FALSE}
