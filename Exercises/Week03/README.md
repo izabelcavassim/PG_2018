@@ -9,6 +9,7 @@ In this exercise we will analyse a vcf-file like the one you created yourselves 
 In this exercise will use the R package `vcfR` to read vcf-files into R. We can read the vcf-file like this:
 
 ```{r read data, echo=F}
+install.packages('vcfR')
 library(vcfR)
 vcf <- read.vcfR("chr2_135_145.vcf.gz")
 ```
@@ -16,6 +17,8 @@ vcf <- read.vcfR("chr2_135_145.vcf.gz")
 We will use the `dplyr` package to analyse the data so we want the data to be in "tidy" format. We can get that by using the vcfR2tidy function.
 
 ```{r make data tidy, echo=F}
+install.packages('dplyr')
+library(dplyr)
 tvcf <- vcfR2tidy(vcf, 
           single_frame = TRUE,
           info_fields = c("TR"),
