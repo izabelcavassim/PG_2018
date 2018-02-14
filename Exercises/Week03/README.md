@@ -5,6 +5,10 @@ ____
 ## Data
 In this exercise we will analyse a vcf-file like the one you created yourselves last week. We will only use R so you can do the analyses on your own machine this week. The vcf-file is called `chr2_135_145.vcf.gz` and you can download it from Materials/Week3 on blackboard.
 
+## Useful links
+In this exercise we will be using two very useful packages: `dplyr` and `ggplot`. The learning curve can be quite steep, but once you learn it, it becomes very natural and useful! :)
+You can find nice links to go deeper into your learning: [ggplot](https://monashbioinformaticsplatform.github.io/r-more/topics/tidyverse.html) and [dplyr](https://cran.r-project.org/web/packages/dplyr/vignettes/dplyr.html).
+
 ## vcfR
 In this exercise will use the R package `vcfR` to read vcf-files into R. We can read the vcf-file like this:
 
