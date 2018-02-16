@@ -71,7 +71,7 @@ To speed up computations you can make a lookup table first. That takes a while, 
 
 That produces a file named `new_lk.txt`.
 
-    rhomap -seq recmap_data.ldhat.sites -loc ldhat_input.ldhat.locs -lk new_lk.txt -its 200000 -samp 2000 -burn 50
+    rhomap -seq recmap_data.ldhat.sites -loc ldhat_input.ldhat.locs -lk new_lk.txt -its 200000 -samp 2000 
 
 - `-lk`: likelihood lookup table.
 - `-its`: number of iterations of the MCMC chain.
@@ -87,13 +87,7 @@ When rhomap completes it writes three files:
 - `summary.txt`: summary of the recombination rates estimated.
 - `rates.txt`: (quoting the manual) is the output from each sample detailing the recombination rate (expressed in $4N_e r$ per kb) between each SNP. summary.txt contains a summary of the samples from the chain detailing, for each SNP interval, the estimated genetic map position, the estimated recombination rate, and the hotspot density (the number of hotspots per kb per iteration). The rates.txt file can be summarized by use of the program stat.
 
-## Summarize results
-
-    /usr/loca/bin/stat -input rates.txt -loc ldhat_input.ldhat.locs -burn 500
-
-that produces a file called `res.txt` that describes the confidence in the estimated recombination rate along the sequence.
-
-## Visualize results
+## Analyze results
 
 Open Rstudio from the directory where your output files are. Do that by navigating into the right directory and then type `rstudio` in the terminal.
 
@@ -117,6 +111,32 @@ If you renamed any of the output files you can specify the new names like this:
 
 ```R
 summary<-summarise.rhomap(rates.file = "<file_name>", burn.in = <float>, locs.file="<file_name>")
+```
+
+The summary produces two plots:
+
+- A graph of the recombination rate across the sequence, along with confidence intervals.
+- A plot showing how estimation of recombination rate has progressed with each MCMC sample. Notice that the initial run of MCMC samples are atypical. This is the "burn-in" of the MCMC. We want to remove that, so take notice of how many samples it corresponds to. If it is 50 they we can produce a new set of estimates that excludes this burn-in using the `stat` program that comes with LDhat:
+
+		/usr/loca/bin/stat -input rates.txt -loc ldhat_input.ldhat.locs -burn 50
+
+This produces a file called `res.txt` that describes the confidence in the estimated recombination rate along the sequence.
+
+Now try to plot the final results:
+
+```R
+library(ggplot2)
+library(dplyr)
+library(tidyr)
+library(magrittr)
+
+rates <- read.table('res.txt')
+rates %>%
+    # filter(Loci > 140000.000, Loci < 142000.000)
+    ggplot(aes(x=Loci, y=Mean_rho, ymin=L95, ymax=U95)) +  
+        geom_line(color='blue') +
+        geom_ribbon(alpha=0.1) +
+        theme_bw()
 ```
 
 Look at the plots and ponder the following questions:
