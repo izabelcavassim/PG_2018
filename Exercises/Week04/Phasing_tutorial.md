@@ -28,7 +28,7 @@ Open the file in IGV (integrative genomics viewer):
 
 Explore phases of haplotypes at two positions in the alignment:
 
-Zoom all the way in and select a base in a European individual (ERR1025620 is English) close to position 130,000,000. Group alignments by genotype (right-click on the base in the alignment tracks to get a popup menu). Answer these questions:
+Zoom all the way in and select a base in a European individual (ERR1025620 is English) close to position 135,000,000. Group alignments by genotype (right-click on the base in the alignment tracks to get a popup menu). Answer these questions:
 
 1. What does the haplotypes look like?
 2. Which haplotypes agree?
