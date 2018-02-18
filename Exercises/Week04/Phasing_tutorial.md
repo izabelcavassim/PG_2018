@@ -13,7 +13,7 @@ Jointly called SNPs in `/home/data/Allvariants_135_145_chr2.vcf`.
 
 For additional information see the [Beagle 4.1 manual](https://faculty.washington.edu/browning/beagle/beagle_4.1_03Oct15.pdf)
 
-    java -jar /home/shared/beagle.08Jun17.d8b.jar gt=/home/data/Allvariants_135_145_chr2.vcf map=/home/data/plink.chr2.GRCh37.map out=Allvariants_135_145_chr2_phased
+    java -jar /home/shared/beagle.08Jun17.d8b.jar gt=/home/Data/Allvariants_135_145_chr2.vcf map=/home/shared/data/plink.chr2.GRCh37.map out=Allvariants_135_145_chr2_phased
 
 ## Browsing phased results
 
