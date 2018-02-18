@@ -71,7 +71,7 @@ To speed up computations you can make a lookup table first. That takes a while, 
 
 That produces a file named `new_lk.txt`.
 
-    rhomap -seq recmap_data.ldhat.sites -loc ldhat_input.ldhat.locs -lk new_lk.txt -its 200000 -samp 2000 
+    rhomap -seq recmap_data.ldhat.sites -loc ldhat_input.ldhat.locs -lk /home/shared/data/new_lk.txt -its 200000 -samp 2000 
 
 - `-lk`: likelihood lookup table.
 - `-its`: number of iterations of the MCMC chain.
