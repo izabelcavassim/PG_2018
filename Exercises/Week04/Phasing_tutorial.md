@@ -83,7 +83,7 @@ Quoting the manual:
 > Four files are generated as the Markov Chain progresses. `acceptance_rates.txt` details the acceptance rates. `hotspots.txt` contains details of the hotspots at each sample from the chain. 
 When rhomap completes it writes three files:
 
-- `acceptance_rates.txt`: acceptance rates of the MCMC. If the are lower than 1%. The program should be run with more iterations.
+- `acceptance_rates.txt`: acceptance rates of the MCMC. If they are lower than 1%. The program should be run with more iterations.
 - `summary.txt`: summary of the recombination rates estimated.
 - `rates.txt`: (quoting the manual) is the output from each sample detailing the recombination rate (expressed in $4N_e r$ per kb) between each SNP. summary.txt contains a summary of the samples from the chain detailing, for each SNP interval, the estimated genetic map position, the estimated recombination rate, and the hotspot density (the number of hotspots per kb per iteration). The rates.txt file can be summarized by use of the program stat.
 
