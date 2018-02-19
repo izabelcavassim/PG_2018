@@ -1,0 +1,94 @@
+---
+title: "PCA and Admixture"
+author: "Maria Izabel cavassim Alves"
+date: '`r Sys.Date()`'
+output:
+  md_document:
+    variant: markdown_github
+---
+
+## Population Structure analysis
+
+With the advent of SNP chip data it is possible to precisely infer the genetic distance across individuals or populations. As written in the book, one way of doing it is by comparing each SNP from each individual against every other individual. This comparison produces the so called: covariance matrix, which in genetic terms means the number of shared polymorphisms across individuals.
+There are many ways to visualize this data, in this tutorial you will be exposed to `Principal Component Analysis` and `Admixture`.
+
+
+
+```{r}
+# Dependencies
+#install.packages('SNPRelate')
+library(SNPRelate)
+library(ggplot2)
+
+# Reading the vcf file and doing the eigendecomposition
+info = read.csv("/Users/PM/Downloads/sample_infos_accessionnb.csv", header = T, sep = ';')
+
+vcf.fn <- "/Users/PM/Downloads/Allvariants_135_145_chr2.vcf"
+snpgdsVCF2GDS(vcf.fn, "/Users/PM/Downloads/first.gds",  method="biallelic.only")
+genofile <- openfn.gds("/Users/PM/Downloads/first.gds")
+pca <- snpgdsPCA(genofile)
+summary(pca)
+attach(pca)
+
+eigenvectors = as.data.frame(pca$eigenvect)
+colnames(eigenvectors) = as.vector(sprintf("PC%s", seq(1:nrow(pca$eigenvect))))
+pca$sample.id = sub("_chr2_piece_dedup", "", pca$sample.id)
+
+# Matching the sample names with their origin and population
+eigenvectors$region = info[match(pca$sample.id, info$ENA.RUN),]$region 
+eigenvectors$population = info[match(pca$sample.id, info$ENA.RUN),]$population
+
+```
+Let's first produce look at how much of the variance of the data is explained by each eigenvalue (or PC):
+
+```{r}
+#p <- qqplot(aes(y = as.numeric(pca$eigenval), x=seq(1, length(pca$eigenval))))
+
+#+ 
+#        geom_point(size=3,alpha=0.5) +
+#        scale_color_manual(values = c("#FF1BB3","#A7FF5B","#99554D")) +
+#        theme_bw()
+
+# Variance proportion:
+pca_percent <- pca$varprop*100
+
+plot(y = pca_percent, x = seq(1, length(pca$eigenval)), type = 'b')
+        
+```
+
+Now, let's plot the two first PC's and color the datapoints by the origin of each individual sample.
+
+```{r}
+ggplot(data = eigenvectors, aes(x = PC1, y = PC2, col = region)) + 
+        geom_point(size=3,alpha=0.5) +
+        scale_color_manual(values = c("#FF1BB3","#A7FF5B","#99554D")) +
+        theme_bw()
+        
+```
+
+Try to plot PC2 and PC3. Do you see the same patterns?
+Now we will implement LD prunning
+
+```{r}
+set.seed(1000)
+
+# Try different LD thresholds for sensitivity analysis
+snpset <- snpgdsLDpruning(genofile, ld.threshold=0.2)
+
+# Get all selected snp id
+snpset.id <- unlist(snpset)
+
+pca_pruned <- snpgdsPCA(genofile, snp.id=snpset.id, num.thread=2)
+eigenvectors = as.data.frame(pca_pruned$eigenvect)
+colnames(eigenvectors) = as.vector(sprintf("PC%s", seq(1:nrow(pca$eigenvect))))
+pca_pruned$sample.id = sub("_chr2_piece_dedup", "", pca$sample.id)
+
+# Matching the sample names with their origin and population
+eigenvectors$region = info[match(pca_pruned$sample.id, info$ENA.RUN),]$region 
+eigenvectors$population = info[match(pca_pruned$sample.id, info$ENA.RUN),]$population
+
+ggplot(data = eigenvectors, aes(x = PC1, y = PC2, col = region)) + 
+        geom_point(size=3,alpha=0.5) +
+        scale_color_manual(values = c("#FF1BB3","#A7FF5B","#99554D")) +
+        theme_bw()
+```
