@@ -69,7 +69,7 @@ To speed up computations you can make a lookup table first. That takes a while, 
 - `-n_pts 101`: number of points in grid: 101 (recommended)
 - `-theta 0.0001`: human theta ($4N_e \mu$).
 
-That produces a file named `new_lk.txt`.
+That produces a file named `new_lk.txt`. The next step is to calculate the recombination map. It will take around 8 minutes for the entire dataset.
 
     rhomap -seq recmap_data.ldhat.sites -loc recmap_data.ldhat.locs -lk /home/shared/data/new_lk.txt -its 200000 -samp 2000 
 
