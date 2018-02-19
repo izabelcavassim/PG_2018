@@ -118,7 +118,7 @@ The summary produces two plots:
 - A graph of the recombination rate across the sequence, along with confidence intervals.
 - A plot showing how estimation of recombination rate has progressed with each MCMC sample. Notice that the initial run of MCMC samples are atypical. This is the "burn-in" of the MCMC. We want to remove that, so take notice of how many samples it corresponds to. If it is 50 they we can produce a new set of estimates that excludes this burn-in using the `stat` program that comes with LDhat:
 
-		/usr/loca/bin/stat -input rates.txt -loc recmap_data.ldhat.locs -burn 50
+		/usr/local/bin/stat -input rates.txt -loc recmap_data.ldhat.locs -burn 50
 
 This produces a file called `res.txt` that describes the confidence in the estimated recombination rate along the sequence.
 
