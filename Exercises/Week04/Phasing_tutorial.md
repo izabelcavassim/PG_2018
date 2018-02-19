@@ -132,7 +132,7 @@ library(magrittr)
 
 rates <- read.table('res.txt', header = T)
 rates %>%
-    # filter(Loci > 140000.000, Loci < 142000.000)
+    # filter(Loci > 140000.000, Loci < 142000.000) %>%
     ggplot(aes(x=Loci, y=Mean_rho, ymin=L95, ymax=U95)) +  
         geom_line(color='blue') +
         geom_ribbon(alpha=0.1) +
