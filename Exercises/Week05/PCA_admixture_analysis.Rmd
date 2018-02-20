@@ -2,17 +2,13 @@
 title: "PCA and Admixture"
 author: "Maria Izabel cavassim Alves"
 date: '`r Sys.Date()`'
-output:
-  md_document:
-    variant: markdown_github
+output: word_document
 ---
 
 ## Population Structure analysis
 
 With the advent of SNP chip data it is possible to precisely infer the genetic distance across individuals or populations. As written in the book, one way of doing it is by comparing each SNP from each individual against every other individual. This comparison produces the so called: covariance matrix, which in genetic terms means the number of shared polymorphisms across individuals.
 There are many ways to visualize this data, in this tutorial you will be exposed to `Principal Component Analysis` and `Admixture`.
-
-
 
 ```{r}
 # Dependencies
@@ -23,12 +19,12 @@ library(ggplot2)
 # Reading the vcf file and doing the eigendecomposition
 info = read.csv("/Users/PM/Downloads/sample_infos_accessionnb.csv", header = T, sep = ';')
 
+# Opening the VCF file and calculating eigendecomposition
 vcf.fn <- "/Users/PM/Downloads/Allvariants_135_145_chr2.vcf"
-snpgdsVCF2GDS(vcf.fn, "/Users/PM/Downloads/first.gds",  method="biallelic.only")
-genofile <- openfn.gds("/Users/PM/Downloads/first.gds")
+snpgdsVCF2GDS(vcf.fn, "/Users/PM/Downloads/first2.gds",  method="biallelic.only")
+genofile <- snpgdsOpen("/Users/PM/Downloads/first2.gds",  FALSE, TRUE, TRUE)
 pca <- snpgdsPCA(genofile)
 summary(pca)
-attach(pca)
 
 eigenvectors = as.data.frame(pca$eigenvect)
 colnames(eigenvectors) = as.vector(sprintf("PC%s", seq(1:nrow(pca$eigenvect))))
@@ -37,22 +33,14 @@ pca$sample.id = sub("_chr2_piece_dedup", "", pca$sample.id)
 # Matching the sample names with their origin and population
 eigenvectors$region = info[match(pca$sample.id, info$ENA.RUN),]$region 
 eigenvectors$population = info[match(pca$sample.id, info$ENA.RUN),]$population
-
 ```
-Let's first produce look at how much of the variance of the data is explained by each eigenvalue (or PC):
+Let's first look at how much of the variance of the data is explained by each eigenvalue (or PC):
 
 ```{r}
-#p <- qqplot(aes(y = as.numeric(pca$eigenval), x=seq(1, length(pca$eigenval))))
-
-#+ 
-#        geom_point(size=3,alpha=0.5) +
-#        scale_color_manual(values = c("#FF1BB3","#A7FF5B","#99554D")) +
-#        theme_bw()
-
 # Variance proportion:
 pca_percent <- pca$varprop*100
 
-plot(y = pca_percent, x = seq(1, length(pca$eigenval)), type = 'b')
+qplot(y = pca_percent, x = seq(1, length(pca$eigenval))) + geom_line() + geom_point() + theme_bw() + xlab("PC's") + ylab("Variance explained (%)") 
         
 ```
 
@@ -63,7 +51,6 @@ ggplot(data = eigenvectors, aes(x = PC1, y = PC2, col = region)) +
         geom_point(size=3,alpha=0.5) +
         scale_color_manual(values = c("#FF1BB3","#A7FF5B","#99554D")) +
         theme_bw()
-        
 ```
 
 Try to plot PC2 and PC3. Do you see the same patterns?
@@ -73,7 +60,7 @@ Now we will implement LD prunning
 set.seed(1000)
 
 # Try different LD thresholds for sensitivity analysis
-snpset <- snpgdsLDpruning(genofile, ld.threshold=0.2)
+snpset <- snpgdsLDpruning(genofile, ld.threshold=0.3)
 
 # Get all selected snp id
 snpset.id <- unlist(snpset)
@@ -91,4 +78,65 @@ ggplot(data = eigenvectors, aes(x = PC1, y = PC2, col = region)) +
         geom_point(size=3,alpha=0.5) +
         scale_color_manual(values = c("#FF1BB3","#A7FF5B","#99554D")) +
         theme_bw()
+```
+
+
+# Admixture
+Admixture is a program for estimating ancestry in a model based manner from autossomal SNP genotype datasets, where individuals are unrelated. The input format required by the software is in binary PLINK (.bed) file. Therefore we first need to convert our vcf file into .bed:
+
+```{r, engine = 'bash', eval=F}
+plink --vcf chr2_135_145.vcf --maf 0.05 --indep-pairwise 1000 50 0.8 --mind 0.02 --recode12 --biallelic-only --out test 
+
+```
+
+Note that at the same time we are filtering the data based on:
+- `--maf`: minor allele frequency above 0.05
+
+- `--indep-pairwise`: pruned subset of markers that are in approximate linkage equilibrium
+
+- `--mind`: excludes individuals with missing data above 0.02
+
+Now with adjusted format and pruned snps, we are able to run the admixture analysis:
+```{r, engine = 'bash', eval=F}
+admixture_macosx-1.3.0/admixture test.ped 3
+```
+
+Have a look at the Fst across populations, that is printed in the terminal. Would you guess which populations are Pop0, Pop1 and Pop2 referring to?
+
+After running admixture, 2 outuputs are generated:
+
+- `Q`: the ancestry fractions
+
+- `P`: the allele frequencies of the inferred ancestral populations 
+
+Sometimes we may have no priori about K, one good way of choosing the best K is by doing a cross-validation procedure impletemented in admixture as follow:
+
+```{r, engine = 'bash', eval=F}
+for K in 1 2 3 4 5; \
+  do admixture_macosx-1.3.0/admixture --cv test.ped $K | tee log${K}.out; done
+```
+
+Have a look at the Crossa Validation error of each K:
+
+``` {r, engine = 'bash', eval=F}
+grep -h CV log*.out
+```
+Look at the distribution of CV error:
+```{r}
+CV = read.table('/Users/PM/Downloads/CV_logs.txt')
+p <- ggplot(data = CV, aes(x = V3, y = V4, group = 1)) + geom_line() + geom_point() + theme_bw() + labs(x = 'Number of clusters', y = 'Cross validation error')
+p
+```
+Based on this graph, what is the best K?
+
+Plotting the Q estimates:
+```{r}
+tbl=read.table("/Users/PM/Downloads/test.3.P")
+barplot(t(as.matrix(tbl)), col=rainbow(3),
+xlab="Individual #", ylab="Ancestry", border=NA)
+```
+
+
+```{r}
+
 ```
