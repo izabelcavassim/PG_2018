@@ -169,12 +169,12 @@ pca &lt;- snpgdsPCA(genofile)</code></pre>
 ## Working space: 27 samples, 49,471 SNPs
 ##     using 1 (CPU) core
 ## PCA: the sum of all selected genotypes (0, 1 and 2) = 2250084
-## Sun Feb 25 10:43:17 2018    (internal increment: 27760)
+## Sun Feb 25 10:36:10 2018    (internal increment: 27760)
 ## 
 [..................................................]  0%, ETC: ---    
 [==================================================] 100%, completed      
-## Sun Feb 25 10:43:17 2018    Begin (eigenvalues and eigenvectors)
-## Sun Feb 25 10:43:17 2018    Done.</code></pre>
+## Sun Feb 25 10:36:10 2018    Begin (eigenvalues and eigenvectors)
+## Sun Feb 25 10:36:10 2018    Done.</code></pre>
 <pre class="r"><code>summary(pca)</code></pre>
 <pre><code>##           Length Class  Mode     
 ## sample.id    27  -none- character
@@ -232,12 +232,12 @@ pca_pruned &lt;- snpgdsPCA(genofile, snp.id=snpset.id, num.thread=2)</code></pre
 ## Working space: 27 samples, 598 SNPs
 ##     using 2 (CPU) cores
 ## PCA: the sum of all selected genotypes (0, 1 and 2) = 29329
-## Sun Feb 25 10:43:18 2018    (internal increment: 27760)
+## Sun Feb 25 10:36:11 2018    (internal increment: 27760)
 ## 
 [..................................................]  0%, ETC: ---    
 [==================================================] 100%, completed      
-## Sun Feb 25 10:43:18 2018    Begin (eigenvalues and eigenvectors)
-## Sun Feb 25 10:43:18 2018    Done.</code></pre>
+## Sun Feb 25 10:36:11 2018    Begin (eigenvalues and eigenvectors)
+## Sun Feb 25 10:36:11 2018    Done.</code></pre>
 <pre class="r"><code>eigenvectors = as.data.frame(pca_pruned$eigenvect)
 colnames(eigenvectors) = as.vector(sprintf(&quot;PC%s&quot;, seq(1:nrow(pca$eigenvect))))
 pca_pruned$sample.id = sub(&quot;_chr2_piece_dedup&quot;, &quot;&quot;, pca$sample.id)
@@ -258,8 +258,8 @@ ggplot(data = eigenvectors, aes(x = PC1, y = PC2, col = region)) +
 ## Working space: 27 samples, 598 SNPs
 ## Output a BIM file.
 ## Output a BED file ...
-##      Sun Feb 25 10:43:19 2018    0%
-##      Sun Feb 25 10:43:19 2018    100%
+##      Sun Feb 25 10:36:11 2018    0%
+##      Sun Feb 25 10:36:11 2018    100%
 ## Done.</code></pre>
 <p>Upload the 3 files produced by this last code (<strong>Allvariants_135_145_chr2_pruned.gds.bed</strong>, <strong>Allvariants_135_145_chr2_pruned.gds.bim</strong> and <strong>Allvariants_135_145_chr2_pruned.gds.fam</strong>) to you own folder on the cluster.</p>
 </div>
