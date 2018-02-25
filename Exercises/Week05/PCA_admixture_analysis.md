@@ -60,12 +60,12 @@ cluster: `/home/shared/PCA_admixture_data`
     ## Working space: 27 samples, 49,471 SNPs
     ##     using 1 (CPU) core
     ## PCA: the sum of all selected genotypes (0, 1 and 2) = 2250084
-    ## Sun Feb 25 10:34:19 2018    (internal increment: 27760)
+    ## Sun Feb 25 10:49:17 2018    (internal increment: 27760)
     ## 
     [..................................................]  0%, ETC: ---    
     [==================================================] 100%, completed      
-    ## Sun Feb 25 10:34:19 2018    Begin (eigenvalues and eigenvectors)
-    ## Sun Feb 25 10:34:19 2018    Done.
+    ## Sun Feb 25 10:49:17 2018    Begin (eigenvalues and eigenvectors)
+    ## Sun Feb 25 10:49:17 2018    Done.
 
     summary(pca)
 
@@ -147,12 +147,12 @@ Now we will implement LD prunning.
     ## Working space: 27 samples, 598 SNPs
     ##     using 2 (CPU) cores
     ## PCA: the sum of all selected genotypes (0, 1 and 2) = 29329
-    ## Sun Feb 25 10:34:20 2018    (internal increment: 27760)
+    ## Sun Feb 25 10:49:18 2018    (internal increment: 27760)
     ## 
     [..................................................]  0%, ETC: ---    
     [==================================================] 100%, completed      
-    ## Sun Feb 25 10:34:20 2018    Begin (eigenvalues and eigenvectors)
-    ## Sun Feb 25 10:34:20 2018    Done.
+    ## Sun Feb 25 10:49:18 2018    Begin (eigenvalues and eigenvectors)
+    ## Sun Feb 25 10:49:18 2018    Done.
 
     eigenvectors = as.data.frame(pca_pruned$eigenvect)
     colnames(eigenvectors) = as.vector(sprintf("PC%s", seq(1:nrow(pca$eigenvect))))
@@ -182,8 +182,8 @@ later used in the admixture exercise:
     ## Working space: 27 samples, 598 SNPs
     ## Output a BIM file.
     ## Output a BED file ...
-    ##      Sun Feb 25 10:34:21 2018    0%
-    ##      Sun Feb 25 10:34:21 2018    100%
+    ##      Sun Feb 25 10:49:18 2018    0%
+    ##      Sun Feb 25 10:49:18 2018    100%
     ## Done.
 
 Upload the 3 files produced by this last code
