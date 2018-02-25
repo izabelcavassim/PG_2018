@@ -15,16 +15,13 @@ and do the PCA. If you want to explore a bit more on the functionality
 of the package access
 [here](https://www.rdocumentation.org/packages/SNPRelate/versions/1.6.4).
 
-    knitr::opts_knit$set(root.dir = "/Users/PM/Dropbox/PG2018/exercises/PCA_admixture")
+In this first of the exercise please download the vcf file
+(Allvariants\_135\_145\_chr2.vcf) and the metadata placed in the
+cluster: `/home/shared/PCA_admixture_data`
 
     # Dependencies
     #install.packages('SNPRelate')
     library(SNPRelate)
-
-    ## Loading required package: gdsfmt
-
-    ## SNPRelate -- supported by Streaming SIMD Extensions 2 (SSE2)
-
     library(ggplot2)
 
     # Use setwd to allocate to the directory that you have downloaded your files from cluster.
@@ -63,12 +60,12 @@ of the package access
     ## Working space: 27 samples, 49,471 SNPs
     ##     using 1 (CPU) core
     ## PCA: the sum of all selected genotypes (0, 1 and 2) = 2250084
-    ## Sun Feb 25 10:14:28 2018    (internal increment: 27760)
+    ## Sun Feb 25 10:34:19 2018    (internal increment: 27760)
     ## 
     [..................................................]  0%, ETC: ---    
     [==================================================] 100%, completed      
-    ## Sun Feb 25 10:14:28 2018    Begin (eigenvalues and eigenvectors)
-    ## Sun Feb 25 10:14:28 2018    Done.
+    ## Sun Feb 25 10:34:19 2018    Begin (eigenvalues and eigenvectors)
+    ## Sun Feb 25 10:34:19 2018    Done.
 
     summary(pca)
 
@@ -94,7 +91,7 @@ eigenvector and an eigenvalue? Hint: Have a look at page 180 of HEG.
     eigenvectors$population = info[match(pca$sample.id, info$ENA.RUN),]$population
 
 Let's first look at how much of the variance of the data is explained by
-each eigenvalue (or PC):
+each eigenvalue:
 
     # Variance proportion:
     pca_percent <- pca$varprop*100
@@ -150,12 +147,12 @@ Now we will implement LD prunning.
     ## Working space: 27 samples, 598 SNPs
     ##     using 2 (CPU) cores
     ## PCA: the sum of all selected genotypes (0, 1 and 2) = 29329
-    ## Sun Feb 25 10:14:29 2018    (internal increment: 27760)
+    ## Sun Feb 25 10:34:20 2018    (internal increment: 27760)
     ## 
     [..................................................]  0%, ETC: ---    
     [==================================================] 100%, completed      
-    ## Sun Feb 25 10:14:29 2018    Begin (eigenvalues and eigenvectors)
-    ## Sun Feb 25 10:14:29 2018    Done.
+    ## Sun Feb 25 10:34:20 2018    Begin (eigenvalues and eigenvectors)
+    ## Sun Feb 25 10:34:20 2018    Done.
 
     eigenvectors = as.data.frame(pca_pruned$eigenvect)
     colnames(eigenvectors) = as.vector(sprintf("PC%s", seq(1:nrow(pca$eigenvect))))
@@ -185,8 +182,8 @@ later used in the admixture exercise:
     ## Working space: 27 samples, 598 SNPs
     ## Output a BIM file.
     ## Output a BED file ...
-    ##      Sun Feb 25 10:14:29 2018    0%
-    ##      Sun Feb 25 10:14:29 2018    100%
+    ##      Sun Feb 25 10:34:21 2018    0%
+    ##      Sun Feb 25 10:34:21 2018    100%
     ## Done.
 
 Upload the 3 files produced by this last code
@@ -204,8 +201,8 @@ The input format required by the software is in binary PLINK (.bed)
 file. That is why we converted our vcf file into .bed.
 
 Now with adjusted format and pruned snps, we are ready to run the
-admixture analysis. We believe that our individuals in the sample data
-derive their ancestry from three ancestral populations:
+admixture analysis. We believe that our individuals are derived from
+three ancestral populations:
 
     ../shared/PCA_admixture_data/admixture_linux-1.3.0/admixture Allvariants_135_145_chr2_pruned.gds.bed 3
 
@@ -272,6 +269,8 @@ access
 [here](http://www.sanger.ac.uk/resources/downloads/human/hapmap3.html).
 A information file **relationships\_w\_pops\_121708.txt**, as well as
 **.bim**, **.bed**, **.fam** files are available for the admixture
-analysis. Answer the same questions as answered in this tutorial and
-write a report (5 pages maximum) about the results and the analysis you
-have done. The deadline of the report will be given during the lecture.
+analysis, this dataset is placed in the cluster:
+**/home/shared/PCA\_admixture\_data/hapmap**. Answer the same questions
+as answered in this tutorial and write a report (5 pages maximum) about
+the results and the analysis you have done. The deadline of the report
+will be given during the lecture.
