@@ -2,7 +2,9 @@
 title: "PCA and Admixture"
 author: "Maria Izabel cavassim Alves"
 date: '`r Sys.Date()`'
-output: word_document
+output:
+  html_document: default
+  variant: markdown_github
 ---
 
 ## Population Structure analysis
@@ -11,21 +13,32 @@ With the advent of SNP data it is possible to precisely infer the genetic distan
 There are many ways to visualize this data, in this tutorial you will be exposed to `Principal Component Analysis` and `Admixture` software.
 
 We will use the R package `SNPRelate`, which can easily handle vcf files and do the PCA. If you want to explore a bit more on the functionality of the package access [here](https://www.rdocumentation.org/packages/SNPRelate/versions/1.6.4).
+
+```{r setup}
+knitr::opts_knit$set(root.dir = "/Users/PM/Dropbox/PG2018/exercises/PCA_admixture")
+```
+
+
 ```{r}
 # Dependencies
 #install.packages('SNPRelate')
 library(SNPRelate)
 library(ggplot2)
 
+# Use setwd to allocate to the directory that you have downloaded your files from cluster.
+# I donwloaded my files to: 
+setwd("/Users/PM/Dropbox/PG2018/exercises/PCA_admixture")
+
 # Reading the metadata information 
-info = read.csv("/Users/PM/Downloads/Sample_meta_data.csv", header = T, sep = ';')
+info = read.csv("Sample_meta_data.csv", header = T, sep = ';')
 
 # Setting the directory of the VCF file 
-vcf.fn <- "/Users/PM/Downloads/Allvariants_135_145_chr2_test.vcf.recode.vcf"
+vcf.fn <- "Allvariants_135_145_chr2.vcf"
 
-# Reading the vcf file
-snpgdsVCF2GDS(vcf.fn, "/Users/PM/Downloads/example2.gds",  method="biallelic.only")
-genofile <- snpgdsOpen("/Users/PM/Downloads/example2.gds",  FALSE, TRUE, TRUE)
+# Transforming the vcf file to gds format
+snpgdsVCF2GDS(vcf.fn, "Allvariants_135_145_chr2_2.gds", method="biallelic.only")
+
+genofile <- snpgdsOpen("Allvariants_135_145_chr2_2.gds",  FALSE, TRUE, TRUE)
 pca <- snpgdsPCA(genofile)
 summary(pca)
 ```
@@ -49,8 +62,8 @@ pca_percent <- pca$varprop*100
 
 qplot(y = pca_percent, x = seq(1, length(pca$eigenval))) + geom_line() + geom_point() + theme_bw() + xlab("PC's") + ylab("Variance explained (%)") 
 
-dev.off()        
 ```
+
 **Q.2** How many PC's do we need in order to explain 50% of the variance of the data? Can you make an accumulative plot of the variance explained PC?
 
 
@@ -61,6 +74,7 @@ ggplot(data = eigenvectors, aes(x = PC1, y = PC2, col = region)) +
         scale_color_manual(values = c("#FF1BB3","#A7FF5B","#99554D")) +
         theme_bw()
 ```
+
 **Q.2** Try to plot PC2 and PC3. Do you see the same patterns?
 
 **Q.3** Try also to color the graph based on population. What do you observe?
@@ -69,13 +83,14 @@ Now we will implement LD prunning.
 ```{r}
 set.seed(1000)
 
-# Try different LD thresholds for sensitivity analysis
+# This function prune the snps with a thrshold of maximum 0.3 of LD
 snpset <- snpgdsLDpruning(genofile, ld.threshold=0.3)
 
 # Get all selected snp's ids
 snpset.id <- unlist(snpset)
 
 pca_pruned <- snpgdsPCA(genofile, snp.id=snpset.id, num.thread=2)
+
 eigenvectors = as.data.frame(pca_pruned$eigenvect)
 colnames(eigenvectors) = as.vector(sprintf("PC%s", seq(1:nrow(pca$eigenvect))))
 pca_pruned$sample.id = sub("_chr2_piece_dedup", "", pca$sample.id)
@@ -90,21 +105,24 @@ ggplot(data = eigenvectors, aes(x = PC1, y = PC2, col = region)) +
         theme_bw() + coord_flip()
 ```
 
-** Q.4** Implement different LD thresholds (0.1, 0.2, 0.3, 0.4, 0.5). How many SNPs are left after each filtering threshold? Are these SNPs linked? 
+**Q.4** Implement different LD thresholds (0.1, 0.2, 0.3, 0.4, 0.5). How many SNPs are left after each filtering threshold? Are these SNPs linked? 
 
 
 Now we are going to convert this GDS file into a plink format, to be later used in the admixture exercise:
 
 ```{r}
-snpgdsGDS2BED(genofile, "/Users/PM/Downloads/test2", sample.id=NULL, snp.id=snpset.id, snpfirstdim=NULL, verbose=TRUE)
+snpgdsGDS2BED(genofile, "Allvariants_135_145_chr2_pruned.gds", sample.id=NULL, snp.id=snpset.id, snpfirstdim=NULL, verbose=TRUE)
 ```
+
+Upload the 3 files produced by this last code (**Allvariants_135_145_chr2_pruned.gds.bed**, **Allvariants_135_145_chr2_pruned.gds.bim** and **Allvariants_135_145_chr2_pruned.gds.fam**) to you own folder on the cluster.
 
 # Admixture
 Admixture is a program for estimating ancestry in a model based manner from autossomal SNP genotype datasets, where individuals are unrelated. The input format required by the software is in binary PLINK (.bed) file. That is why we converted our vcf file into .bed.
 
 Now with adjusted format and pruned snps, we are ready to run the admixture analysis. We believe that our individuals in the sample data derive their ancestry from three ancestral populations:
+
 ```{r, engine = 'bash', eval=F}
-admixture_macosx-1.3.0/admixture test2.bed 3
+../shared/PCA_admixture_data/admixture_linux-1.3.0/admixture Allvariants_135_145_chr2_pruned.gds.bed 3
 ```
 
 **Q.5** Have a look at the Fst across populations, that is printed in the terminal. Would you guess which populations are Pop0, Pop1 and Pop2 referring to?
@@ -119,7 +137,7 @@ Sometimes we may have no priori about K, one good way of choosing the best K is 
 
 ```{r, engine = 'bash', eval=F}
 for K in 1 2 3 4 5; \
-  do /admixture_macosx-1.3.0/admixture --cv hapmap.bed $K | tee log${K}.out; done
+  do ../shared/PCA_admixture_data/admixture_linux-1.3.0/admixture --cv Allvariants_135_145_chr2_pruned.gds.bed $K | tee log${K}.out; done
 ```
 
 Have a look at the Cross Validation error of each K:
@@ -133,21 +151,24 @@ Save it in a text file:
 grep -h CV log*.out > CV_logs.txt
 ``` 
 
-Look at the distribution of CV error:
+Look at the distribution of CV error. You can download your file to your own computer or run it in the cluster.
 ```{r}
-CV = read.table('/Users/PM/Downloads/CV_logs.txt')
+CV = read.table('CV_logs.txt')
 p <- ggplot(data = CV, aes(x = V3, y = V4, group = 1)) + geom_line() + geom_point() + theme_bw() + labs(x = 'Number of clusters', y = 'Cross validation error')
+
 p
+#ggsave(p, device = "pdf")
 ```
+
 **Q.6** What do you understand of Cross validation error? Based on this graph, what is the best K?
 
 Plotting the Q estimates. Choose the K that makes more sense to you.
 ```{r}
-tbl = read.table("/Users/PM/Downloads/test2.3.Q")
+tbl = read.table("Allvariants_135_145_chr2_pruned.gds.3.Q")
 ord = tbl[order(tbl$V1,tbl$V2,tbl$V3),]
 bp = barplot(t(as.matrix(ord)), 
               space = c(0.2),
-              col=rainbow(4),
+              col=rainbow(3),
               xlab="Individual #", 
               ylab="Ancestry",
               border=NA)
@@ -156,7 +177,8 @@ bp = barplot(t(as.matrix(ord)),
 **Q.7** How many cluster do you identify in this plot? Does that agree with what was found using PCA? 
 
 In the following part of this exercise you will do both analysis (PCA and Admixture) using a different dataset. The data comes from the HAPMAP Consortium, to learn more about the populations studied in this project access [here](http://www.sanger.ac.uk/resources/downloads/human/hapmap3.html). A information file **relationships_w_pops_121708.txt**, as well as **.bim**, **.bed**, **.fam** files are available for the admixture analysis. Answer the same questions as answered in this tutorial and write a report (5 pages maximum) about the results and the analysis you have done. The deadline of the report will be given during the lecture.
-```{r}
+
+```{r, echo = F, eval = F}
 CV = read.table('/Users/PM/Downloads/hapmap/CV_logs.txt')
 p <- ggplot(data = CV, aes(x = V3, y = V4, group = 1)) + geom_line() + geom_point() + theme_bw() + labs(x = 'Number of clusters', y = 'Cross validation error')
 p
@@ -187,6 +209,6 @@ ggplot(data = eigenvectors, aes(x = V1, y = V2)) +
 ```
 
 
-```{r, engine='bash', eval = F}
+```{r, engine='bash', eval = F, echo = F}
  vcftools --vcf Allvariants_135_145_chr2.vcf --recode --out Allvariants_135_145_chr2_test.vcf --remove-indv ERR1025639_chr2_piece_dedup
 ```
