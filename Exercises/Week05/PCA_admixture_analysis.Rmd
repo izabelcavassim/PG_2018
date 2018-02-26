@@ -57,7 +57,7 @@ eigenvectors$region = info[match(pca$sample.id, info$ENA.RUN),]$region
 eigenvectors$population = info[match(pca$sample.id, info$ENA.RUN),]$population
 ```
 
-Let's first look at how much of the variance of the data is explained by each eigenvalue:
+Let's first look at how much of the variance of the data is explained by each eigenvector:
 ```{r}
 # Variance proportion:
 pca_percent <- pca$varprop*100
@@ -77,7 +77,7 @@ ggplot(data = eigenvectors, aes(x = PC1, y = PC2, col = region)) +
         theme_bw()
 ```
 
-**Q.2** Try to plot PC2 and PC3. Do you see the same patterns?
+**Q.2** Try to plot PC2 and PC3. Do you see the same patterns? What is the correlation between PC2 and PC3 (hint use the function cor())?
 
 **Q.3** Try also to color the graph based on population. What do you observe?
 

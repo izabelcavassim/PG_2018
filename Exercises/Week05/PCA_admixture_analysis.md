@@ -60,12 +60,12 @@ cluster: `/home/shared/PCA_admixture_data`
     ## Working space: 27 samples, 49,471 SNPs
     ##     using 1 (CPU) core
     ## PCA: the sum of all selected genotypes (0, 1 and 2) = 2250084
-    ## Sun Feb 25 10:49:17 2018    (internal increment: 27760)
+    ## Mon Feb 26 09:31:30 2018    (internal increment: 27760)
     ## 
     [..................................................]  0%, ETC: ---    
     [==================================================] 100%, completed      
-    ## Sun Feb 25 10:49:17 2018    Begin (eigenvalues and eigenvectors)
-    ## Sun Feb 25 10:49:17 2018    Done.
+    ## Mon Feb 26 09:31:30 2018    Begin (eigenvalues and eigenvectors)
+    ## Mon Feb 26 09:31:30 2018    Done.
 
     summary(pca)
 
@@ -91,7 +91,7 @@ eigenvector and an eigenvalue? Hint: Have a look at page 180 of HEG.
     eigenvectors$population = info[match(pca$sample.id, info$ENA.RUN),]$population
 
 Let's first look at how much of the variance of the data is explained by
-each eigenvalue:
+each eigenvector:
 
     # Variance proportion:
     pca_percent <- pca$varprop*100
@@ -114,7 +114,8 @@ origin of each individual sample.
 
 ![](PCA_admixture_analysis_files/figure-markdown_strict/unnamed-chunk-4-1.png)
 
-**Q.2** Try to plot PC2 and PC3. Do you see the same patterns?
+**Q.2** Try to plot PC2 and PC3. Do you see the same patterns? What is
+the correlation between PC2 and PC3 (hint use the function cor())?
 
 **Q.3** Try also to color the graph based on population. What do you
 observe?
@@ -147,12 +148,12 @@ Now we will implement LD prunning.
     ## Working space: 27 samples, 598 SNPs
     ##     using 2 (CPU) cores
     ## PCA: the sum of all selected genotypes (0, 1 and 2) = 29329
-    ## Sun Feb 25 10:49:18 2018    (internal increment: 27760)
+    ## Mon Feb 26 09:31:31 2018    (internal increment: 27760)
     ## 
     [..................................................]  0%, ETC: ---    
     [==================================================] 100%, completed      
-    ## Sun Feb 25 10:49:18 2018    Begin (eigenvalues and eigenvectors)
-    ## Sun Feb 25 10:49:18 2018    Done.
+    ## Mon Feb 26 09:31:31 2018    Begin (eigenvalues and eigenvectors)
+    ## Mon Feb 26 09:31:31 2018    Done.
 
     eigenvectors = as.data.frame(pca_pruned$eigenvect)
     colnames(eigenvectors) = as.vector(sprintf("PC%s", seq(1:nrow(pca$eigenvect))))
@@ -182,8 +183,8 @@ later used in the admixture exercise:
     ## Working space: 27 samples, 598 SNPs
     ## Output a BIM file.
     ## Output a BED file ...
-    ##      Sun Feb 25 10:49:18 2018    0%
-    ##      Sun Feb 25 10:49:18 2018    100%
+    ##      Mon Feb 26 09:31:31 2018    0%
+    ##      Mon Feb 26 09:31:31 2018    100%
     ## Done.
 
 Upload the 3 files produced by this last code
