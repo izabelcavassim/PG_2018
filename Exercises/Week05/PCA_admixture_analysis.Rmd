@@ -23,7 +23,9 @@ knitr::opts_knit$set(root.dir = "/Users/PM/Dropbox/PG2018/exercises/PCA_admixtur
 
 ```{r, cache = F, message=FALSE}
 # Dependencies
-#install.packages('SNPRelate')
+source("http://bioconductor.org/biocLite.R")
+biocLite("SNPRelate")
+
 library(SNPRelate)
 library(ggplot2)
 

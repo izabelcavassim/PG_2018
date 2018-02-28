@@ -20,7 +20,13 @@ In this first of the exercise please download the vcf file
 cluster: `/home/shared/PCA_admixture_data`
 
     # Dependencies
-    #install.packages('SNPRelate')
+    source("http://bioconductor.org/biocLite.R")
+    biocLite("SNPRelate")
+
+    ## 
+    ## The downloaded binary packages are in
+    ##  /var/folders/f7/fngykpfs7317fds_z0s26d2w0000gn/T//Rtmpt4swuq/downloaded_packages
+
     library(SNPRelate)
     library(ggplot2)
 
@@ -60,12 +66,12 @@ cluster: `/home/shared/PCA_admixture_data`
     ## Working space: 27 samples, 49,471 SNPs
     ##     using 1 (CPU) core
     ## PCA: the sum of all selected genotypes (0, 1 and 2) = 2250084
-    ## Mon Feb 26 09:31:30 2018    (internal increment: 27760)
+    ## Wed Feb 28 12:35:41 2018    (internal increment: 27760)
     ## 
     [..................................................]  0%, ETC: ---    
     [==================================================] 100%, completed      
-    ## Mon Feb 26 09:31:30 2018    Begin (eigenvalues and eigenvectors)
-    ## Mon Feb 26 09:31:30 2018    Done.
+    ## Wed Feb 28 12:35:41 2018    Begin (eigenvalues and eigenvectors)
+    ## Wed Feb 28 12:35:41 2018    Done.
 
     summary(pca)
 
@@ -148,12 +154,12 @@ Now we will implement LD prunning.
     ## Working space: 27 samples, 598 SNPs
     ##     using 2 (CPU) cores
     ## PCA: the sum of all selected genotypes (0, 1 and 2) = 29329
-    ## Mon Feb 26 09:31:31 2018    (internal increment: 27760)
+    ## Wed Feb 28 12:35:42 2018    (internal increment: 27760)
     ## 
     [..................................................]  0%, ETC: ---    
     [==================================================] 100%, completed      
-    ## Mon Feb 26 09:31:31 2018    Begin (eigenvalues and eigenvectors)
-    ## Mon Feb 26 09:31:31 2018    Done.
+    ## Wed Feb 28 12:35:42 2018    Begin (eigenvalues and eigenvectors)
+    ## Wed Feb 28 12:35:42 2018    Done.
 
     eigenvectors = as.data.frame(pca_pruned$eigenvect)
     colnames(eigenvectors) = as.vector(sprintf("PC%s", seq(1:nrow(pca$eigenvect))))
@@ -183,8 +189,8 @@ later used in the admixture exercise:
     ## Working space: 27 samples, 598 SNPs
     ## Output a BIM file.
     ## Output a BED file ...
-    ##      Mon Feb 26 09:31:31 2018    0%
-    ##      Mon Feb 26 09:31:31 2018    100%
+    ##      Wed Feb 28 12:35:43 2018    0%
+    ##      Wed Feb 28 12:35:43 2018    100%
     ## Done.
 
 Upload the 3 files produced by this last code
