@@ -180,7 +180,15 @@ bp = barplot(t(as.matrix(ord)),
 
 **Q.7** How many cluster do you identify in this plot? Does that agree with what was found using PCA? 
 
-In the following part of this exercise you will do both analysis (PCA and Admixture) using a different dataset. The data comes from the HAPMAP Consortium, to learn more about the populations studied in this project access [here](http://www.sanger.ac.uk/resources/downloads/human/hapmap3.html). A information file **relationships_w_pops_121708.txt**, as well as **.bim**, **.bed**, **.fam** files are available for the admixture analysis, this dataset is placed in the cluster: **/home/shared/PCA_admixture_data/hapmap**. Answer the same questions as answered in this tutorial and write a report (5 pages maximum) about the results and the analysis you have done. The deadline of the report will be given during the lecture.
+In the following part of this exercise you will do both analysis (PCA and Admixture) using a different dataset. The data comes from the HAPMAP Consortium, to learn more about the populations studied in this project access [here](http://www.sanger.ac.uk/resources/downloads/human/hapmap3.html). A information file **relationships_w_pops_121708.txt**, as well as **.bim**, **.bed**, **.fam** files are available for the admixture analysis, this dataset is placed in the cluster: **/home/shared/PCA_admixture_data/hapmap**. 
+
+To produce the vcf file out of the these files format you can type:
+
+```{r, engine = 'bash'}
+plink --bfile hapmap --recode vcf --out hapmap
+```
+
+Answer the same questions as answered in this tutorial and write a report (5 pages maximum) about the results and the analysis you have done. The deadline of the report will be given during the lecture.
 
 ```{r, echo = F, eval = F}
 CV = read.table('/Users/PM/Downloads/hapmap/CV_logs.txt')
