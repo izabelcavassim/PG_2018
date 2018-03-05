@@ -73,6 +73,26 @@ Then you can generate the plot like this:
 
     psmc_plot.pl -R -u 1.2e-08 -g 25 -p ERR1019039_chr2_piece_consensus_plot ERR1019039_chr2_piece_consensus.psmc
 
+The `-u` option specifies the per year mutation rate and the `-g` the generation time. The `-p` option specifies the basen name for the output files and `-R` option preserves the intermediate files the script produces. The latter is handy if you want to make plots yourself combining several PSMC analyses.
+
+## Repeat the analysis on two other individuals
+
+Redo the whole pipeline with additional two individuals so you have one European, one Asian and one African. Once you have that you can make a plot with all three PSMC curves in one plot in R. Try out the code below:
+
+```R
+psmc_data1 <- read.table("ERR1019039_chr2_piece_consensus_plot.0.txt", header=F)
+psmc_data2 <- read.table("ERR1019039_chr2_piece_consensus_plot.0.txt", header=F)
+psmc_data3 <- read.table("ERR1019039_chr2_piece_consensus_plot.0.txt", header=F)
+
+plot(c(log(7e-05), log(0.02)), c(0,5), type="n",  xaxt="n", bty="n", main=expression(italic("P. hamadryas")), xlab="Time (scaled in units of 2??T)", ylab=expression(paste('Population size (scaled in units of 4??N'['e'],'??10'^"3", ")")), las=1)
+with(psmc_data1, lines(log(V1), V2, type="S", lw=1.5))
+with(psmc_data2, lines(log(V1), V2, type="S", lw=1.5))
+with(psmc_data3, lines(log(V1), V2, type="S", lw=1.5))
+axis(side=1, at=log((c(1:9*1e-05, 1:9*1e-04, 1:9*1e-03, 1:9*1e-02))), labels=F) 
+labs <- c(expression("10"^"-5"), expression("10"^"-4"), expression("10"^"-3"), expression("10"^"-2"))
+text(x=log(c(1e-05, 1e-04, 1e-03, 1e-02)), y=1.5*par("usr")[3], pos=1, adj=1, labels = labs, xpd = TRUE)
+```
+
 
 ## A note on scaling the PSMC output (from the PSMC GitHub page)
 
