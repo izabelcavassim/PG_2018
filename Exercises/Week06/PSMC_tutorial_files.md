@@ -15,9 +15,7 @@ Starting from mapped reads, the first step is to produce a consensus sequence in
 
 We'll take advantage of Unix pipes and the ability of samtools to work with streaming input and output to run the whole pipeline (samtools -> bcftools -> vcfutils.pl) as one command. We run our consensus calling pipeline, consisting of a linked set of `samtools`, `bcftools`, and `vcfutils.pl` commands:
 
-    samtools mpileup -Q 30 -q 30 -u -v -f /home/Data/Homo_sapiens.GRCh37.75.dna.chromosome.2.fa -r 2 ERR1025630_sort_dedup.bam |  bcftools call -c | vcfutils.pl vcf2fq -d 5 -D 34 -Q 30 > ERR1025630_sort_dedup_consensus.fq
-
-    samtools mpileup -Q 30 -q 30 -u -v -f /home/Data/Homo_sapiens.GRCh37.75.dna.chromosome.2.fa -r 2 ../Data/Resulted_BAM_files/ERR1019039_chr2_piece_dedup.bam |  bcftools call -c | vcfutils.pl vcf2fq -d 5 -D 34 -Q 30 > ERR1019039_chr2_piece_dedup.fq
+    #samtools mpileup -Q 30 -q 30 -u -v -f /home/Data/Homo_sapiens.GRCh37.75.dna.chromosome.2.fa -r 2 ../Data/Resulted_BAM_files/ERR1019039_chr2_piece_dedup.bam |  bcftools call -c | vcfutils.pl vcf2fq -d 5 -D 100 -Q 30 > ERR1019039_chr2_consensus.fq
 
 This takes as input an aligned bam file and a reference genome, generates an mpileup using `samtools`, calls the consensus sequence with `bcftools`, and then filters and converts the consensus to FASTQ format, writing the results for each chromosome to a separate FASTQ file. Some parameter explanations:
 
@@ -30,21 +28,50 @@ This takes as input an aligned bam file and a reference genome, generates an mpi
 2. `bcftools`:
     - call `-c` calls a consensus sequence from the mpileup using the original calling method
 3. `vcfutils.pl`:
-    - `-d 5` and `-d 34` determine the minimum and maximum coverage to allow for `vcf2fq`, anything outside that range is filtered
+    - `-d 5` and `-D 100` determine the minimum and maximum coverage to allow for `vcf2fq`, anything outside that range is filtered
     - `-Q 30` sets the root mean squared mapping quality minimum to 30
 
-## Running PSMC
-PSMC takes the consensus FASTQ file, and infers the history of population sizes. So first we need to convert this FASTQ file to the input format for PSMC:
+This takes about 15 mins and produces a FASTQ sequence file with the full chromosome two. Since we only mapped reads to part of it, we need to cut out that piece. To do that you need to produce a small Python script with the following code:
 
-    utils/fq2psmcfa -q20 ERR1025630_sort_dedup_consensus.fq > ERR1025630_sort_dedup_consensus.psmcfa
+```python
+import sys
+from Bio import SeqIO
+
+_, start, end, input_file_name, output_file_name = sys.argv
+fastq_parser = SeqIO.parse(input_file_name, "fastq")
+record = next(fastq_parser)
+part = record[int(start):int(end)]
+SeqIO.write(part, output_file_name, "fastq")
+```
+
+Open a new file in your favourite text editor. Paste the code above into the the file and save in your working directory as `fqcutout.py`. See if you can guess what it does. You run the program like this:
+
+```
+python fqcutout.py 135000000 145000000 ERR1019039_chr2_consensus.fq ERR1019039_chr2_piece_consensus.fq
+```
+
+That produces `ERR1019039_chr2_piece_dedup.psmcfa`, which is the input file for PSMC.
+
+## Creating a PSMC input file
+PSMC takes the consensus FASTQ file, and infers the history of population sizes, but first we need to convert this FASTQ file to the input format for PSMC:
+
+    fq2psmcfa -q20 ERR1019039_chr2_piece_consensus.fq > ERR1019039_chr2_piece_consensus.psmcfa
 
 > The `-p` option specifies that there are 64 atomic time intervals and 28 (=1+25+1+1) free interval parameters. The first parameter spans the first 4 atomic time intervals, each of the next 25 parameters spans 2 intervals, the 27th spans 4 intervals and the last parameter spans the last 6 time intervals. The `-p` and `-t` options are manually chosen such that after 20 rounds of iterations, at least ~10 recombinations are inferred to occur in the intervals each parameter spans. Impropriate settings may lead to overfitting. The command line in the example above has been shown to be suitable for modern humans. 
 
-    psmc -N25 -t15 -r5 -p "4+25*2+4+6" -o ERR1025630_sort_dedup_consensus.psmc ERR1025630_sort_dedup_consensus.psmcfa
+## Running PSMC
 
-Finally, we make the PSMC plot, using the per-generation mutation rate `-u` and the generation time in years `-g` reported in the paper. Because the paper does not give exact parameters for how they produced the plot, this likely will look a bit different than the figure, but hopefully it will be pretty close.
+    psmc -N25 -t15 -r5 -p "4+25*2+4+6" -o ERR1019039_chr2_piece_consensus.psmc ERR1019039_chr2_piece_consensus.psmcfa
 
-    psmc_plot.pl -u 1.2e-08 -g 25 -p ERR1025630_sort_dedup_consensus_plot ERR1025630_sort_dedup_consensus.psmc
+Finally, we make the PSMC plot, specifying the per-generation mutation rate using `-u` and the generation time in years using `-g`.
+
+To make a nice figure you first need to run the following command so the plotting routine knows where to find a file it needs:
+
+		export GNUPLOT_PS_DIR=/data/opt/anaconda3/share/gnuplot/5.0/PostScript
+
+Then you can generate the plot like this:
+
+    psmc_plot.pl -R -u 1.2e-08 -g 25 -p ERR1019039_chr2_piece_consensus_plot ERR1019039_chr2_piece_consensus.psmc
 
 
 ## A note on scaling the PSMC output (from the PSMC GitHub page)
