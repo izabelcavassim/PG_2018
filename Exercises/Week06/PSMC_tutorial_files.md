@@ -22,7 +22,7 @@ This takes as input an aligned bam file and a reference genome, generates an mpi
     - `-v` tells mpileup to produce vcf output, and `-u` says that should be uncompressed
     - `-f` is the reference fasta used (needs to be indexed)
     - `-r` is the region to call the mpileup for (in this case, a particular chromosome based on the array task id)
-    - `P964.bam` is the bam file to use
+    - `ERR1025630_sort_dedup.bam` is the bam file to use
 2. `bcftools`:
     - call `-c` calls a consensus sequence from the mpileup using the original calling method
 3. `vcfutils.pl`:
