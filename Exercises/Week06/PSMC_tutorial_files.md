@@ -92,6 +92,9 @@ text(x=log(c(1e4, 1e5, 1e6, 1e7)), y=1.5*par("usr")[3], pos=1, adj=1, labels = l
 
 ## ggplot version
 library(ggplot2)
+psmc_data1 <- read.table("ERR1025630_sort_dedup_consensus_plot.0.txt", header=F, col.names = c('Years', 'Effective_pop_size', 'X', 'Y', 'C'))
+psmc_data2 <- read.table("ERR1025630_sort_dedup_consensus_plot.0.txt", header =F, col.names = c('Years', 'Effective_pop_size', 'X', 'Y', 'C'))
+
 
 # If data 1 is African and data2 is European you can type: 
 
