@@ -89,5 +89,25 @@ with(psmc_data1, lines(log(V1), V2, type="S", lw=1.5, col='red'))
 axis(side=1, at=log((c(1:9*1e4, 1:9*1e5, 1:9*1e6, 1:9*1e7))), labels=F) 
 labs <- c(expression("10"^"4"), expression("10"^"5"), expression("10"^"6"), expression("10"^"7"))
 text(x=log(c(1e4, 1e5, 1e6, 1e7)), y=1.5*par("usr")[3], pos=1, adj=1, labels = labs, xpd = TRUE)
+
+## ggplot version
+library(ggplot2)
+
+# If data 1 is African and data2 is European you can type: 
+
+psmc_data1$type = 'African'
+psmc_data2$type = 'European'
+
+df3 = data.frame(type=c(psmc_data1$type, psmc_data2$type), Years = c(psmc_data1$Years, psmc_data2$Years), 'Effective_pop_size'=c(psmc_data1$Effective_pop_size,psmc_data2$Effective_pop_size))
+# Ggplot version
+library(ggplot2)
+
+g <- ggplot(df3, aes(x=Years, y=Effective_pop_size, color="NCL-08")) + geom_line(aes(color=type), size=1.5) + 
+  theme_bw() + 
+  labs(x= expression(paste("Years (g=25, ", mu, "=2,5*", 10^-8,")")), y=expression(paste("Effective population size (x", 10^-8, ")")), title='Results of PSMC') +
+  scale_x_log10(breaks=c(1000, 10000, 100000, 1000000),
+                minor_breaks=c(500, 5000, 50000, 500000))
+g
+
 ```
 
