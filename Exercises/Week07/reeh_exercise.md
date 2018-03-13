@@ -21,14 +21,14 @@ Package
 
 The package requires 2 inputs:
 
-1.  The snp file (snp\_ID, Chromosome, position, reference allele and derived allele)
+1.  The snp file (`snp_ID`, `Chromosome`, `position`, `reference allele` and `derived allele`).
 
-2.  The haplotype file: The haplotype of each individual encoded as reference allele, alternative allele and missing data N
+2.  The haplotype file: haplotype of each individual encoded as reference allele, alternative allele and missing data N.
 
 Analysis
 --------
 
-You will perform a genome wide scan and then focus on candidate SNPs. The package that you will be using on these analysis is **rehh**. And the vignette of the package can be found at blackboard or [here](https://cran.r-project.org/web/packages/rehh/vignettes/rehh.pdf). Please have a look at the document and get familiarized with the functions of rehh.
+You will perform a genome wide scan and then focus on candidate SNPs. The package that you will be using on these analysis is `rehh`. And the vignette of the package can be found at blackboard or [here](https://cran.r-project.org/web/packages/rehh/vignettes/rehh.pdf). Please have a look at the document and get familiarized with the functions of the package.
 
 ### Reading in data in REHH format
 
@@ -36,25 +36,17 @@ You will perform a genome wide scan and then focus on candidate SNPs. The packag
 # Install the package
 #install.packages('rehh')
 library(rehh)
-```
 
-    ## Loading required package: rehh.data
-
-    ## Loading required package: gplots
-
-    ## 
-    ## Attaching package: 'gplots'
-
-    ## The following object is masked from 'package:stats':
-    ## 
-    ##     lowess
-
-``` r
 # Define the directory of your working folder:
 setwd("~/Dropbox/PG2018/exercises/rehh")
 
 # Reading the data for each population:
-hap360_400_AF <-data2haplohh(hap_file="genotypes360_400_AF",map_file="snps360_400_filtered",recode.allele=TRUE, min_perc_geno.snp=100, min_perc_geno.hap=80, haplotype.in.columns=TRUE, chr.name=1)
+hap360_400_AF <-data2haplohh(hap_file="genotypes360_400_AF",map_file="snps360_400_filtered",
+                             recode.allele=TRUE, 
+                             min_perc_geno.snp=100,
+                             min_perc_geno.hap=80,
+                             haplotype.in.columns=TRUE,
+                             chr.name=1)
 ```
 
     ## Map file seems OK: 24198  SNPs declared for chromosome 1 
@@ -67,10 +59,6 @@ hap360_400_AF <-data2haplohh(hap_file="genotypes360_400_AF",map_file="snps360_40
     ## No SNP discarded
     ## Data consists of 26 haplotypes and 24198 SNPs
 
-``` r
-hap360_400_SA <-data2haplohh(hap_file="genotypes360_400_SA",map_file="snps360_400_filtered",recode.allele=TRUE, min_perc_geno.snp=100, min_perc_geno.hap=80, haplotype.in.columns=TRUE, chr.name=1)
-```
-
     ## Map file seems OK: 24198  SNPs declared for chromosome 1 
     ## Haplotype are in columns with no header
     ## Alleles are being recoded according to map file as:
@@ -81,10 +69,6 @@ hap360_400_SA <-data2haplohh(hap_file="genotypes360_400_SA",map_file="snps360_40
     ## No SNP discarded
     ## Data consists of 30 haplotypes and 24198 SNPs
 
-``` r
-hap360_400_WE <-data2haplohh(hap_file="genotypes360_400_WE",map_file="snps360_400_filtered",recode.allele=TRUE, min_perc_geno.snp=100, min_perc_geno.hap=80, haplotype.in.columns=TRUE, chr.name=1)
-```
-
     ## Map file seems OK: 24198  SNPs declared for chromosome 1 
     ## Haplotype are in columns with no header
     ## Alleles are being recoded according to map file as:
@@ -94,10 +78,6 @@ hap360_400_WE <-data2haplohh(hap_file="genotypes360_400_WE",map_file="snps360_40
     ## Discard SNPs genotyped on less than  100 % of haplotypes
     ## No SNP discarded
     ## Data consists of 44 haplotypes and 24198 SNPs
-
-``` r
-hap360_400_EA <-data2haplohh(hap_file="genotypes360_400_EA",map_file="snps360_400_filtered",recode.allele=TRUE, min_perc_geno.snp=100, min_perc_geno.hap=80, haplotype.in.columns=TRUE, chr.name=1)
-```
 
     ## Map file seems OK: 24198  SNPs declared for chromosome 1 
     ## Haplotype are in columns with no header
