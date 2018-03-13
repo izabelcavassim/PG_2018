@@ -151,14 +151,14 @@ wg.rsbAFWE <- ies2rsb(res.scanAF,res.scanWE, popname1 = "Africa", popname2 = "W 
                       method = "bilateral")
 ```
 
+Use the function rsbplot() and xpehhplot() to plot your results:
+
 ``` r
 rsbplot(wg.rsbAFWE, plot.pval = T)
 wg.XPEHHAFWE <- ies2xpehh(res.scanAF,res.scanWE, popname1 = "Africa", popname2 = "W Europe", method = "bilateral")
+
 xpehhplot(wg.XPEHHAFWE, plot.pval = T)
 wg.XPEHHAFSA <- ies2xpehh(res.scanAF,res.scanSA, popname1 = "Africa", popname2 = "South Asia", method = "bilateral")
-
-wg.XPEHHAFEA <- ies2xpehh(res.scanAF,res.scanEA, popname1 = "Africa", popname2 = "East Asia", method = "bilateral")
-wg.XPEHHWESA <- ies2xpehh(res.scanWE,res.scanSA, popname1 = "WestEurope", popname2 = "South Asia", method = "bilateral")
 ```
 
 Zooming in on interesting markers
