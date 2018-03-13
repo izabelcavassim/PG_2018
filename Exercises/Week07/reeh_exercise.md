@@ -61,15 +61,13 @@ hap360_400_AF <-data2haplohh(hap_file="genotypes360_400_AF",map_file="snps360_40
     ## No SNP discarded
     ## Data consists of 26 haplotypes and 24198 SNPs
 
-    ## Map file seems OK: 24198  SNPs declared for chromosome 1 
-    ## Haplotype are in columns with no header
-    ## Alleles are being recoded according to map file as:
-    ##  0 (missing data), 1 (ancestral allele) or 2 (derived allele)
-    ## Discard Haplotype with less than  80 % of genotyped SNPs
-    ## No haplotype discarded
-    ## Discard SNPs genotyped on less than  100 % of haplotypes
-    ## No SNP discarded
-    ## Data consists of 30 haplotypes and 24198 SNPs
+``` r
+hap360_400_WE <-data2haplohh(hap_file="genotypes360_400_WE",map_file="snps360_400_filtered",
+                             recode.allele=TRUE,
+                             min_perc_geno.snp=100,
+                             min_perc_geno.hap=80,
+                             haplotype.in.columns=TRUE, chr.name=1)
+```
 
     ## Map file seems OK: 24198  SNPs declared for chromosome 1 
     ## Haplotype are in columns with no header
@@ -80,16 +78,6 @@ hap360_400_AF <-data2haplohh(hap_file="genotypes360_400_AF",map_file="snps360_40
     ## Discard SNPs genotyped on less than  100 % of haplotypes
     ## No SNP discarded
     ## Data consists of 44 haplotypes and 24198 SNPs
-
-    ## Map file seems OK: 24198  SNPs declared for chromosome 1 
-    ## Haplotype are in columns with no header
-    ## Alleles are being recoded according to map file as:
-    ##  0 (missing data), 1 (ancestral allele) or 2 (derived allele)
-    ## Discard Haplotype with less than  80 % of genotyped SNPs
-    ## No haplotype discarded
-    ## Discard SNPs genotyped on less than  100 % of haplotypes
-    ## No SNP discarded
-    ## Data consists of 24 haplotypes and 24198 SNPs
 
 #### Q1. How many haplotypes and snps are found in each population?
 
@@ -105,7 +93,9 @@ Hint: Allele frequencies are calculated and stored as part of the dataframe resu
 #### Q3. How is the standardized iHH calculated? For what reason do they standardize iHS measure?
 
 ``` r
+# Producing the required input dataframe:
 res.scanAF<-scan_hh(hap360_400_AF)
+res.scanWE<-scan_hh(hap360_400_WE)
 
 head(res.scanAF)
 ```
@@ -126,18 +116,21 @@ head(res.scanAF)
     ## X:X_73266095                    NA
 
 ``` r
+# Scanning each population at time:
 wg.ihsAF<-ihh2ihs(res.scanAF, freqbin = 0.05) 
+
+# Plotting the results:
 ihsplot(wg.ihsAF, plot.pval = TRUE)
 ```
 
-#### Q4. Do you find SNP outliers with significant iHS?
+#### Q4. Do you find outliers with significant iHS?
 
 If so, record the SNP positions of the most significant SNPs for later analysis, using e.g. which.max() or which.min().
 
 Perform pairwise population tests
 ---------------------------------
 
-There are two possible functions to be used, `ies2rsb` and `ies2xpehh`, both require the dataframes of 'scan\_hh' class.
+There are two possible functions to be used, `ies2rsb` and `ies2xpehh`, both require the dataframes of `scan_hh` class.
 
 #### Q5. Can you see the differences between the different methods?
 
@@ -151,18 +144,17 @@ wg.rsbAFWE <- ies2rsb(res.scanAF,res.scanWE, popname1 = "Africa", popname2 = "W 
                       method = "bilateral")
 ```
 
-Use the function rsbplot() and xpehhplot() to plot your results:
+Use the function rsbplot() and xpehhplot() to explore and plot your results:
 
 ``` r
 rsbplot(wg.rsbAFWE, plot.pval = T)
 wg.XPEHHAFWE <- ies2xpehh(res.scanAF,res.scanWE, popname1 = "Africa", popname2 = "W Europe", method = "bilateral")
 
 xpehhplot(wg.XPEHHAFWE, plot.pval = T)
-wg.XPEHHAFSA <- ies2xpehh(res.scanAF,res.scanSA, popname1 = "Africa", popname2 = "South Asia", method = "bilateral")
 ```
 
-Zooming in on interesting markers
----------------------------------
+Zooming in interesting markers
+------------------------------
 
 From the scan you can find SNPs that give extreme values of iEHS or of XPEHH for a set of populations. You can then analyse the haplotype structure around them. This is done by including the index position of the interested marker in the functions `calc_ehhs` and `bifurcation.diagram`.
 
