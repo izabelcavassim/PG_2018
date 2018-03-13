@@ -23,8 +23,8 @@ knitr::opts_knit$set(root.dir = "/Users/PM/Dropbox/PG2018/exercises/PCA_admixtur
 
 ```{r, cache = F, message=FALSE}
 # Dependencies
-source("http://bioconductor.org/biocLite.R")
-biocLite("SNPRelate")
+#source("http://bioconductor.org/biocLite.R")
+#biocLite("SNPRelate")
 
 library(SNPRelate)
 library(ggplot2)
@@ -191,7 +191,9 @@ plink --bfile hapmap --recode vcf --out hapmap
 Answer the same questions as answered in this tutorial and write a report (5 pages maximum) about the results and the analysis you have done. The deadline of the report will be given during the lecture.
 
 ```{r, echo = F, eval = F}
-CV = read.table('/Users/PM/Downloads/hapmap/CV_logs.txt')
+# Results of the exercise
+
+CV = read.table('/PM/Downloads/hapmap/CV_logs.txt')
 p <- ggplot(data = CV, aes(x = V3, y = V4, group = 1)) + geom_line() + geom_point() + theme_bw() + labs(x = 'Number of clusters', y = 'Cross validation error')
 p
 
@@ -204,11 +206,12 @@ bp = barplot(t(as.matrix(ord)),
               ylab="Ancestry",
               border=NA)
 # Setting the directory of the VCF file 
-vcf.fn <- "/Users/PM/Downloads/hapmap/hapmap.vcf"
+vcf.fn <- "/Users/PM/Dropbox/PG2018/exercises/PCA_admixture/hapmap/hapmap.vcf"
 
 # Reading the vcf file
-snpgdsVCF2GDS(vcf.fn, "/Users/PM/Downloads/hapmap/example2.gds",  method="biallelic.only")
-genofile2 <- snpgdsOpen("/Users/PM/Downloads/hapmap/example2.gds",  FALSE, TRUE, TRUE)
+snpgdsVCF2GDS(vcf.fn, "/Users/PM/Dropbox/PG2018/exercises/PCA_admixture/hapmap/data.gds",  method="biallelic.only")
+
+genofile2 <- snpgdsOpen("/Users/PM/Dropbox/PG2018/exercises/PCA_admixture/hapmap/data.gds",  FALSE, TRUE, TRUE)
 pca <- snpgdsPCA(genofile2)
 summary(pca)
 
@@ -218,6 +221,13 @@ ggplot(data = eigenvectors, aes(x = V1, y = V2)) +
         geom_point(size=3,alpha=0.5) +
         scale_color_manual(values = c("#FF1BB3","#A7FF5B","#99554D")) +
         theme_bw() + coord_flip()
+
+
+# Variance proportion:
+pca_percent <- pca$varprop*100
+
+qplot(y = pca_percent[1:28], x = seq(1, length(pca$eigenval[1:28]))) + geom_line() + geom_point() + theme_bw() + xlab("PC's") + ylab("Variance explained (%)") 
+
 ```
 
 
