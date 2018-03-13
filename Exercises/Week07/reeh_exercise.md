@@ -16,6 +16,8 @@ You will have data from the following populations:
 
 The data consists of **24198** SNPs from the region 73-81 Mb on the X chromosome and there is no missing data. The haplotype data for each population is found in separate files (**genotypes360\_400\_.**), whereas they use a common SNP identity file **snps360\_400\_filtered.snp**.
 
+![](reeh_exercise_files/figure-markdown_github/unnamed-chunk-1-1.png)
+
 Package
 -------
 
@@ -94,38 +96,62 @@ hap360_400_AF <-data2haplohh(hap_file="genotypes360_400_AF",map_file="snps360_40
 Scan the region using iHS, Rsb and XP-EHH
 -----------------------------------------
 
-You should first perform a scan for each of the regions for extreme values of **i**ntegrated **h**aplotype **s**core (iHS), standardized to difference in allele frequency. This implies using the functions **scan\_hh**, followed by \*\*ihh2ihs and then plotting the results using either ihsplot or plotting by yourself
+You should first perform a scan for each of the regions for extreme values of **i**ntegrated **h**aplotype **s**core (iHS). This calculation is done by standardizing to differences in allele frequency. This implies using the functions `scan_hh`, followed by `ihh2ihs` and then plotting the results using either ihsplot or plotting by yourself.
 
-#### Q2. Try to also plot a histogram of the allelefrequncies of the SNPs in each population (part of the dataframe resulted from scan\_hh).
+#### Q2. Try also to plot a histogram of the allele frequencies of the SNPs in each population. Do you observe population differences?
 
-#### Do you find outliers with significant iHS? Then, record the SNP positions of the most significant SNPs for later analysis, using e.g. which.max() or which.min().
+Hint: Allele frequencies are calculated and stored as part of the dataframe resulted from scan\_hh. Use (par mfrow) function to combibe the 4 different population plots. Once you have obtained the data\_frame produced by `scan_hh` you can compute the standardized iHS (iHH), as described in [Voight et al. (2006)](http://journals.plos.org/plosbiology/article?id=10.1371/journal.pbio.0040072).
+
+#### Q3. How is the standardized iHH calculated? For what reason do they standardize iHS measure?
 
 ``` r
 res.scanAF<-scan_hh(hap360_400_AF)
-res.scanSA<-scan_hh(hap360_400_SA)
-res.scanWE<-scan_hh(hap360_400_WE)
-res.scanEA<-scan_hh(hap360_400_EA)
 
+head(res.scanAF)
+```
+
+    ##              CHR POSITION     freq_A iHH_A iHH_D iES_Tang_et_al_2007
+    ## X:X_73263128   1 73263128 0.00000000     0    NA                  NA
+    ## X:X_73264012   1 73264012 0.03846154     0    NA                  NA
+    ## X:X_73264487   1 73264487 0.03846154     0    NA                  NA
+    ## X:X_73264603   1 73264603 0.03846154     0    NA                  NA
+    ## X:X_73265256   1 73265256 0.00000000     0    NA                  NA
+    ## X:X_73266095   1 73266095 1.00000000    NA     0                  NA
+    ##              iES_Sabeti_et_al_2007
+    ## X:X_73263128                    NA
+    ## X:X_73264012                    NA
+    ## X:X_73264487                    NA
+    ## X:X_73264603                    NA
+    ## X:X_73265256                    NA
+    ## X:X_73266095                    NA
+
+``` r
 wg.ihsAF<-ihh2ihs(res.scanAF, freqbin = 0.05) 
 ihsplot(wg.ihsAF, plot.pval = TRUE)
-
-wg.ihsSA<-ihh2ihs(res.scanSA, freqbin = 0.05) 
-ihsplot(wg.ihsSA, plot.pval = TRUE, ylim.scan = 2, main = "iHS South Asia")
-
-wg.ihsWE<-ihh2ihs(res.scanWE, freqbin = 0.05) 
-ihsplot(wg.ihsWE, plot.pval = TRUE)
-
-wg.ihsEA<-ihh2ihs(res.scanEA, freqbin = 0.05) 
-ihsplot(wg.ihsEA, plot.pval = TRUE)
 ```
+
+#### Q4. Do you find SNP outliers with significant iHS?
+
+If so, record the SNP positions of the most significant SNPs for later analysis, using e.g. which.max() or which.min().
 
 Perform pairwise population tests
 ---------------------------------
 
-There are two possible functions to be used, both require the dataframes of 'scan\_hh' class.
+There are two possible functions to be used, `ies2rsb` and `ies2xpehh`, both require the dataframes of 'scan\_hh' class.
+
+#### Q5. Can you see the differences between the different methods?
 
 ``` r
-wg.rsbAFWE <- ies2rsb(res.scanAF,res.scanWE, popname1 = "Africa", popname2 = "W Europe", method = "bilateral")
+# Have a look at the differences between the functions:
+#?ies2rsb()
+#?ies2xpehh()
+
+# Computing ies2rsb between African population over West European population:
+wg.rsbAFWE <- ies2rsb(res.scanAF,res.scanWE, popname1 = "Africa", popname2 = "W Europe",
+                      method = "bilateral")
+```
+
+``` r
 rsbplot(wg.rsbAFWE, plot.pval = T)
 wg.XPEHHAFWE <- ies2xpehh(res.scanAF,res.scanWE, popname1 = "Africa", popname2 = "W Europe", method = "bilateral")
 xpehhplot(wg.XPEHHAFWE, plot.pval = T)
@@ -138,24 +164,20 @@ wg.XPEHHWESA <- ies2xpehh(res.scanWE,res.scanSA, popname1 = "WestEurope", popnam
 Zooming in on interesting markers
 ---------------------------------
 
-From the scan you can find SNPs that give extreme values of iEHS or of XPEHH for a set of populations. You can then analyse the haplotype structure around them. This is done by including the index position of the interested marker in the functions **calc\_ehhs** and **bifurcation.diagram**.
+From the scan you can find SNPs that give extreme values of iEHS or of XPEHH for a set of populations. You can then analyse the haplotype structure around them. This is done by including the index position of the interested marker in the functions `calc_ehhs` and `bifurcation.diagram`.
 
 ``` r
 #For African Western Europe the most significant marker is 4901
-
-calc_ehhs(hap360_400_WE, mrk=4901)
-calc_ehh(hap360_400_WE,mrk = 4901)
-
-calc_ehhs(hap360_400_AF, mrk=4901)
-calc_ehh(hap360_400_AF,mrk = 4901)
+a = calc_ehhs(hap360_400_WE, mrk=4901)
 
 layout(matrix(1:2,2,1))
-bifurcation.diagram(hap360_400_WE,mrk_foc=4901,all_foc=1,nmrk_l=200,nmrk_r=200, refsize = 0.8,
-main="Candidate X: Ancestral Allele")
-bifurcation.diagram(hap360_400_AF,mrk_foc=4901,all_foc=1,nmrk_l=200,nmrk_r=200, refsize = 0.8,
-main="Candidate X: Ancestral Allele")
+diag = bifurcation.diagram(hap360_400_WE,mrk_foc=4901,
+                    all_foc=1,nmrk_l=200,
+                    nmrk_r=200, 
+                    refsize = 0.8,
+                    main="Candidate X: Ancestral Allele")
 ```
 
-### What is the biological function of the region around this snp?
+#### Q6. What is the biological function of the region around this snp?
 
-Have a look at NCBI, remember that this dataset belongs to chromosome X and HG19 as reference.
+Have a look at [NCBI](ncbi.nlm.nih.gov) and remember that this dataset belongs to chromosome X and [HG19](https://www.ncbi.nlm.nih.gov/assembly/GCF_000001405.13/) as reference.
