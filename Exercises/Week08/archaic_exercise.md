@@ -10,11 +10,11 @@ diversity project and from the 1000 genomes project, paper
 We will introduce you to the data format and then you should aim to
 answer some of the questions that we pose below.
 
-In this exercise we will be asked to dow a lot of data manipulation. One
+In this exercise we will be asked to do a lot of data manipulation. One
 way of doing it is through the package `dplyr`. If you have any doubts
 about how to execute a specific task, do not be afraid to google it!
 [Here](https://www3.nd.edu/~steve/computing_with_data/24_dplyr/dplyr.html)
-you can find some examples on how to use it.The package `ggplot` will
+you can find some examples on how to use it. The package `ggplot` will
 also help you to quickily visualize your results.
 
 ``` r
