@@ -14,8 +14,8 @@ In this exercise we will be asked to dow a lot of data manipulation. One
 way of doing it is through the package `dplyr`. If you have any doubts
 about how to execute a specific task, do not be afraid to google it!
 [Here](https://www3.nd.edu/~steve/computing_with_data/24_dplyr/dplyr.html)
-you can find some examples on how to use it.The package `ggplot` we
-would help you to quickily visualize your results.
+you can find some examples on how to use it.The package `ggplot` will
+also help you to quickily visualize your results.
 
 ``` r
 archaic_df = read.table('~/Dropbox/PG2018/exercises/archaic_segments/ArchaicSegments copy.txt', sep='\t', header = T)
@@ -82,7 +82,9 @@ ggplot(mean_seg_region, aes(x = region, y = `Mean segment length`)) +  geom_bar(
 ```
 
 ![](archaic_exercise_files/figure-markdown_github/unnamed-chunk-2-2.png)
-\#\# The lengths of Archaic fragments
+
+The lengths of Archaic fragments
+--------------------------------
 
 The lengths of the fragments are given by the length variable and is
 regarding the segments that appear to have too many SNPs after the
@@ -117,7 +119,9 @@ SNPs with. If there are equally many SNPs shared then share the fragment
 between the two individuals. If there are no SNPs shared with any of the
 archaics then considewr the fragment unassigned.
 
-##### Q1. For each individual, assign the archaic segments to origin and reconstruct a Figure in the same style as Figure 5 of the Cell paper (plot below). ![](figure5_cell.png)
+##### Q1. For each individual, assign the archaic segments to origin and reconstruct a Figure in the same style as Figure 5 of the Cell paper (plot below).
+
+![](figure5_cell.png)
 
 ##### Q2. What are major differences? What can explain these differences?
 
