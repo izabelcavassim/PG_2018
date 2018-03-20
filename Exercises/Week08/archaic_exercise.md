@@ -137,16 +137,16 @@ Comparison of chromosomes
 -------------------------
 
 You can also investigate how the introgression events are distributed
-along the genome. \#\#\#\#\# Q1. Determine the amount of archaic
-introgression on each chromosome for each of the five regions.
-\#\#\#\#\# Q2. Repeat this with assignment of archaic regions to archaic
-species. \#\#\#\#\# Q3. Combine the Neanderthal fragments for all
-individuals and plot all the fragments on top of each other (as proxy
-for the site frequency disitribution) along chromosomes (hint use alpha
-= 0.1). Can you find “deserts” of archaic admixture and/or evidence for
-places where Neanderthal ancestry has reached very high frequency?
-\#\#\#\#\# Q4. You will find that the X chromosome is an outlier
-(compare to a chormossome of a similar size - chr8). How and why?
-\#\#\#\#\# Q5. Repeat the analysis with Denisova fragments \#\#\#\#\#
-Q6. Do you find regions that are devoid of introgression for both the
-Neanderthal and the Denisovan admixture events?
+along the genome.
+
+##### Q1. Determine the amount of archaic introgression on each chromosome for each of the five regions.
+
+##### Q2. Repeat this with assignment of archaic regions to archaic species.
+
+##### Q3. Combine the Neanderthal fragments for all individuals and plot all the fragments on top of each other (as proxy for the site frequency disitribution) along chromosomes (hint use alpha = 0.1). Can you find “deserts” of archaic admixture and/or evidence for places where Neanderthal ancestry has reached very high frequency?
+
+##### Q4. You will find that the X chromosome is an outlier (compare to a chormossome of a similar size - chr8). How and why?
+
+##### Q5. Repeat the analysis with Denisova fragments
+
+##### Q6. Do you find regions that are devoid of introgression for both the Neanderthal and the Denisovan admixture events?
