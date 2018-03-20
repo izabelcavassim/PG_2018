@@ -78,7 +78,9 @@ mean_seg_region <- archaic_df %>%
         summarise(`Mean segment length` = mean(length)) 
 
 # Can you plot it?
-ggplot(mean_seg_region, aes(x = region, y = `Mean segment length`)) +  geom_bar(position = "dodge", stat="identity") + theme_bw()
+ggplot(mean_seg_region, aes(x = region, y = `Mean segment length`)) +  
+    geom_bar(position = "dodge", stat="identity") 
+    + theme_bw()
 ```
 
 ![](archaic_exercise_files/figure-markdown_github/unnamed-chunk-2-2.png)
