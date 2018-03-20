@@ -49,13 +49,13 @@ mean_seg_pop <- archaic_df %>%
         summarise(`Mean segment length` = mean(length))
   
 mean_seg_pop %>%
-  ungroup() %>%
+ ungroup() %>%
   arrange(region) %>% 
-  mutate(pop = factor(pop, pop)) %>%
-ggplot(aes(x = pop, y = `Mean segment length`, fill = region)) + 
-        geom_bar(position = "dodge", stat="identity") + 
-        theme_bw() +
-        theme(axis.text.x = element_text(angle = 90, hjust = 1))
+    mutate(pop = factor(pop, pop)) %>%
+        ggplot(aes(x = pop, y = `Mean segment length`, fill = region)) + 
+            geom_bar(position = "dodge", stat="identity") + 
+            theme_bw() +
+            theme(axis.text.x = element_text(angle = 90, hjust = 1))
 ```
 
 ![](archaic_exercise_files/figure-markdown_github/unnamed-chunk-2-1.png)
