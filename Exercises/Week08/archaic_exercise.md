@@ -18,7 +18,8 @@ you can find some examples on how to use it. The package `ggplot` will
 also help you to quickily visualize your results.
 
 ``` r
-archaic_df = read.table('~/Dropbox/PG2018/exercises/archaic_segments/ArchaicSegments copy.txt', sep='\t', header = T)
+archaic_df = read.table('~/Dropbox/PG2018/exercises/archaic_segments/ArchaicSegments.txt',
+    sep='\t', header = T)
 
 # How many individuals do we have?
 length(unique(archaic_df$name))
