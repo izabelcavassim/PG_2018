@@ -94,19 +94,19 @@ African SNPs have been filtered away (see Laurits’ method). You will
 first look at these before classifying them into their most likely
 archaic origin
 
-##### Q1. Find the total lengths of Arcahic fragments in each individual
+##### Q1. Find the total lengths of Arcahic fragments in each individual.
 
-##### Q2. Summarise the total length per population and per region
+##### Q2. Summarise the total length per population and per region.
 
 ##### Q3. Which population has most archaic ancestry? Why?
 
-##### Q4. What is the length distribution of fragments for the five different regions (hint: you can use facet\_grid to plot all at once)
+##### Q4. What is the length distribution of fragments for the five different regions (hint: you can use facet\_grid to plot all at once).
 
-##### Q5. What is the average length of fragments for each population and each region
+##### Q5. What is the average length of fragments for each population and each region?
 
 ##### Q6. What can cause different mean fragment lengths?
 
-##### Q7. If you have a recombination rate of 1cM per Megabase, how many generations do your average fragment length for the different regions then correspond to? How many years is that if generation time=30 years
+##### Q7. If you have a recombination rate of 1cM per Megabase, how many generations do your average fragment length for the different regions then correspond to? How many years is that if generation time=30 years.
 
 ##### Optional question: Combining all individuals, how large a fraction of the genome contains archaic segments?
 
@@ -131,7 +131,7 @@ archaics then considewr the fragment unassigned.
 
 ##### Q4. How much of the Neanderthal genome (combining Vindija and Altai) and the Denisovan genomes can be reconstructed in total?
 
-##### Q5. Can you find any evidence of the second Denisova in the East Asian genomes? (hint: compare the ratio of denisovans snps to total snps in the denisovan fragments)
+##### Q5. Can you find any evidence of the second Denisova in the East Asian genomes? (hint: compare the ratio of denisovans snps to total snps in the denisovan fragments).
 
 ##### Q6. Determine the fragment length distribution of segment of Neanderthal and Denisova origin separately for each region. Compare the mean of the distributions.
 
@@ -153,6 +153,6 @@ along the genome.
 
 ##### Q4. You will find that the X chromosome is an outlier (compare to a chormossome of a similar size - chr8). How and why?
 
-##### Q5. Repeat the analysis with Denisova fragments
+##### Q5. Repeat the analysis with Denisova fragments.
 
 ##### Q6. Do you find regions that are devoid of introgression for both the Neanderthal and the Denisovan admixture events?
