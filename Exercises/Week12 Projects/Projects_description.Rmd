@@ -1,6 +1,3 @@
-```{r setup, include=FALSE, echo = F}
-knitr::opts_chunk$set(echo = TRUE)
-```
 
 ### Project description and requirements
 
