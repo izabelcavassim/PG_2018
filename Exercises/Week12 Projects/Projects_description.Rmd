@@ -3,13 +3,19 @@
 
 The last part of this course focus on applying the knowledge acquired during these 10 weeks into real genetic datasets. The project is **mandatory** and needs to be handed-in as a report. The requirements of the report are:
 
- * Report of at maximum 10 pages (including reference and figures)
+
+|------------------------|
+|Report of at maximum 10 pages (including reference and figures)|
+| It needs to be divided by sections: abstract, introduction,
+ results/discussion, conclusion and references |
+| It needs to be cohesive and coerent|
+| East Asia   |   24 males  |
+
+ * 
  
- * It needs to be divided by sections: abstract, introduction,
- results/discussion, conclusion and references.
+ * 
  
- * It needs to be cohesive and coerent.
- 
+ * 
  * Source code must be provided (appended or linked/github repository).
  
  * It must be in a pdf format.
