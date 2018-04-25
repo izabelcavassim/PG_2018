@@ -43,7 +43,7 @@ The data consists of a vcf file of 150 male full X chromosomes, a bed file with 
 
 ### Investigate the following
 
-A. Perform an Fst scan between sets of populations in a sliding window of 100 SNP positions, including at least the contrast between Africa and Europe, between Europe and East Asia, and between East Asia and Africa. Identify the 10 strongest Fst outlier regions in each case. Identify their genomic position and the genes covered by thse Fst peaks. Discuss potential adaptive explanations. 
+A. Perform an Fst scan between sets of populations in a sliding window of 100 SNP positions, including at least the contrast between Africa and Europe, between Europe and East Asia, and between East Asia and Africa. Identify the 10 strongest Fst outlier regions in each case. Identify their genomic position and the genes covered by these Fst peaks. Discuss potential adaptive explanations. 
 
 B. Perform an iHS scan of the whole X chromosome for at least three populations. Identify the 10 most significant regions and associated with genes as in A.
 
@@ -94,19 +94,19 @@ In this project you will be working with an extended version of the data set tha
 
 In your project you must address the questions below, but you are also expected to expand the project to answer your own questions. How you do this is up to you. You do not need to answer them in the order they are listed. Make a project plan with a set of analyses that  will allow you to answer the questions. 
 
-- To what extent do individuals share SNPs contributed by archaic human introgression? In other words, how correlated are the archaic contents in two individuals?
+A. To what extent do individuals share SNPs contributed by archaic human introgression? In other words, how correlated are the archaic contents in two individuals?
 
-- Is this correlation stronger when you compare individuals from different populations?
+B. Is this correlation stronger when you compare individuals from different populations?
 
-- Is it even stronger when comparing individuals from different geographical regions?
+C. Is it even stronger when comparing individuals from different geographical regions?
 
-- Does the region containing the EPAS1 gene stand out in any way? (Redo the analysis above for a 1Mb window surrounding this gene).
+D. Does the region containing the EPAS1 gene stand out in any way? (Redo the analysis above for a 1Mb window surrounding this gene).
 
-- What is the total amount of admixture in each non-African individual?
+E. What is the total amount of admixture in each non-African individual?
 
-- What is the total amount of admixture in the region around EPAS1 in each individual?
+F. What is the total amount of admixture in the region around EPAS1 in each individual?
 
-- Do individuals with large admixture totals have more correlated admixture patterns? Do individuals with large admixture totals *in the EPAS1 region* have more correlated admixture patterns *in the EPAS1 region*? Can you find any evidence of adaptive introgression?
+G Do individuals with large admixture totals have more correlated admixture patterns? Do individuals with large admixture totals *in the EPAS1 region* have more correlated admixture patterns *in the EPAS1 region*? Can you find any evidence of adaptive introgression?
 
 ### Data
 
