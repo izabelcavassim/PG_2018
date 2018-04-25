@@ -80,9 +80,11 @@ The method called LD-score regression can be used to estimate heritability using
 -----------------------------------------------------------------------------------------------
 
 
-## How alike are non-African genomes in terms of how archaic segments are distributed?
+## Exploring non-African archaic segments
 
 -----------------------------------------------------------------------------------------------
+
+### How alike are non-African genomes in terms of how archaic segments are distributed?
 
 In this project you will be working with an extended version of the data set that you worked with in the admixture exercise. In this version you also have access to the positions of each archaic SNP in the introgressed segments. These are found in the column that before just contained the number of these SNPS in each segment.
 
