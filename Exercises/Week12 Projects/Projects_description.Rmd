@@ -50,9 +50,13 @@ Gene annotation (gtf format) for Hg19 can be found in the following website
 https://www.gencodegenes.org/releases/17.html
 It was also uploaded to the dropbox as **gencode.v17.annotation.gtf**
 
-VCF file:
+Fst Calculation:
 
-Not available yet, but once available will be uploaded in the dropbox link.
+You will do the analysis from scratch by reading the genotype file of each population into different tables (rememeber rows are SNP positons and columns are individuals), the information about the snps are in the .snp file. The data is haploid (n) therefore calculating Fst consists of estimating the allele frequencies for each position and calculating the expected heterozygosity within population Hs and contrasting Expected Heterozygosity across populations Ht. 
+Fst = (Ht - Hs)/Ht. 
+
+This can be done by averaging Fst values for a set of consecutive markers in a given window size.
+
 
 ### Investigate the following
 
