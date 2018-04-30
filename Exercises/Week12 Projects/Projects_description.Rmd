@@ -45,10 +45,13 @@ We encourage you to help each other during the process. Feel free to approach th
 The data consists of a vcf file of 150 male full X chromosomes, a bed file with callable regions, a gif gene annotation file, a metafile with information about the samples and a set of files for use with REHH.
 
 Gene annotation:
-Gene annotation (gtf format) for Hg19 can be found in the following website:
+
+Gene annotation (gtf format) for Hg19 can be found in the following website
 https://www.gencodegenes.org/releases/17.html
+It was also uploaded to the dropbox as **gencode.v17.annotation.gtf**
 
 VCF file:
+
 Not available yet, but once available will be uploaded in the dropbox link.
 
 ### Investigate the following
