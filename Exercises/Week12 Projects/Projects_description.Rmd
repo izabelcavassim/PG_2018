@@ -48,6 +48,9 @@ Gene annotation:
 Gene annotation (gtf format) for Hg19 can be found in the following website:
 https://www.gencodegenes.org/releases/17.html
 
+VCF file:
+Not available yet, but once available will be uploaded in the dropbox link.
+
 ### Investigate the following
 
 A. Perform an Fst scan between sets of populations in a sliding window of 100 SNP positions, including at least the contrast between Africa and Europe, between Europe and East Asia, and between East Asia and Africa. Identify the 10 strongest Fst outlier regions in each case. Identify their genomic position and the genes covered by these Fst peaks. Discuss potential adaptive explanations. 
